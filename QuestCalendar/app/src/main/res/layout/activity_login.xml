@@ -37,7 +37,11 @@
             android:hint="Username"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginBottom="20dp"
-            android:fontFamily="@font/roboto">
+            android:fontFamily="@font/roboto"
+            app:boxStrokeColor="#000"
+            app:hintTextColor="#000"
+            app:placeholderTextColor="#000"
+            android:textColorHint="#000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -52,9 +56,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
+            app:boxStrokeColor="#000"
+            app:hintTextColor="#000"
+            app:placeholderTextColor="#000"
             app:passwordToggleEnabled="true"
             android:layout_marginBottom="20dp"
-            android:fontFamily="@font/roboto">
+            android:fontFamily="@font/roboto"
+            android:textColorHint="#000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
