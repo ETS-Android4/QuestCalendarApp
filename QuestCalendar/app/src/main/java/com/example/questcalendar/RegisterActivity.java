@@ -1,5 +1,6 @@
 package com.example.questcalendar;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -8,8 +9,12 @@ import android.view.View;
 import android.widget.Button;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -142,16 +147,62 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
 
-        //get all the values form the text fields
-        String username = regUsername.getEditText().getText().toString();
-        String email = regEmail.getEditText().getText().toString();
-        String password = regPassword.getEditText().getText().toString();
-        String confirmPassword = regConfirmPassword.getEditText().getText().toString();
+            //get all the values form the text fields
+            String username = regUsername.getEditText().getText().toString();
+            String email = regEmail.getEditText().getText().toString();
+            String password = regPassword.getEditText().getText().toString();
+            String confirmPassword = regConfirmPassword.getEditText().getText().toString();
 
-        UserHelperClass helperClass = new UserHelperClass(username, email, password);
-        //gets the username as a identifier (idk how to create with uid)
-        reference.child(username).setValue(helperClass);
+            UserHelperClass helperClass = new UserHelperClass(username, email, password);
+            //gets the username as a identifier (idk how to create with uid)
+            reference.child(username).setValue(helperClass);
+            onLogin(v);
+
+
+
     }
+
+    public Boolean UserNotExists(){
+        //true when the user doesn't exists
+        //false when there is one with the same name
+        final int[] flag = {0};
+        String userEnteredUsername = regUsername.getEditText().getText().toString().trim();
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://questcalendar-c41e3-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("users");
+        Query checkUser = reference.orderByChild("username").equalTo(userEnteredUsername);
+
+        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    String usernameFromDB = dataSnapshot.child(userEnteredUsername).child("username").getValue().toString();
+                    if(userEnteredUsername.equals(usernameFromDB)){
+                        regUsername.setError("This user already exists");
+                        flag[0] = 1;
+                    }
+
+                }else{
+                    regUsername.setError(null);
+                    regUsername.setErrorEnabled(false);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        if(flag[0]==1){
+            return false;
+        }else{
+            regUsername.setError(null);
+            regUsername.setErrorEnabled(false);
+            return true;
+        }
+    }
+
 
 
     public void onLogin(View view){
