@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">QuestCalendar</string>
+    <string name="title_home">Home</string>
+    <string name="title_add">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_add_task">Add Task</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_calendar">Calendar</string>
+</resources>
