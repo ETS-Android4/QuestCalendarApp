@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "891688738378",
+    "project_id": "questcalendar-c41e3",
+    "storage_bucket": "questcalendar-c41e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:891688738378:android:a0ce473d7b9c41029590b3",
+        "android_client_info": {
+          "package_name": "com.example.questcalendar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "891688738378-bie6pa8vr6hencptjsuh9usrg5sunv9i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAH93MTY4ozzXXIInpRr0hkpAfWL3gqVSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "891688738378-bie6pa8vr6hencptjsuh9usrg5sunv9i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

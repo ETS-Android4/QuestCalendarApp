@@ -4,8 +4,19 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/inava/Desktop/Repositorios/MobComp/QuestCalendarApp/QuestCalendar/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
-        <entry key="..\:/Users/inava/Desktop/Repositorios/MobComp/QuestCalendarApp/QuestCalendarApp/QuestCalendar/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/inava/Desktop/Repositorios/MobComp/QuestCalendarApp/QuestCalendarApp/QuestCalendar/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.16328125" />
+        <entry key="..\:/Users/inava/Desktop/Repositorios/MobComp/QuestCalendarApp/QuestCalendarApp/QuestCalendar/app/src/main/res/drawable/ic_dashboard_black_24dp.xml" value="0.16328125" />
+        <entry key="..\:/Users/inava/Desktop/Repositorios/MobComp/QuestCalendarApp/QuestCalendarApp/QuestCalendar/app/src/main/res/drawable/ic_home_black_24dp.xml" value="0.16328125" />
+        <entry key="..\:/Users/inava/Desktop/Repositorios/MobComp/QuestCalendarApp/QuestCalendarApp/QuestCalendar/app/src/main/res/drawable/ic_launcher_background.xml" value="0.16328125" />
+        <entry key="..\:/Users/inava/Desktop/Repositorios/MobComp/QuestCalendarApp/QuestCalendarApp/QuestCalendar/app/src/main/res/drawable/ic_notifications_black_24dp.xml" value="0.16328125" />
+        <entry key="..\:/Users/inava/Desktop/Repositorios/MobComp/QuestCalendarApp/QuestCalendarApp/QuestCalendar/app/src/main/res/layout/activity_login.xml" value="0.10027855153203342" />
+        <entry key="..\:/Users/inava/Desktop/Repositorios/MobComp/QuestCalendarApp/QuestCalendarApp/QuestCalendar/app/src/main/res/layout/activity_main.xml" value="0.15390625" />
+        <entry key="..\:/Users/inava/Desktop/Repositorios/MobComp/QuestCalendarApp/QuestCalendarApp/QuestCalendar/app/src/main/res/layout/activity_register.xml" value="0.196875" />
+        <entry key="..\:/Users/inava/Desktop/Repositorios/MobComp/QuestCalendarApp/QuestCalendarApp/QuestCalendar/app/src/main/res/layout/activity_welcome.xml" value="0.2" />
         <entry key="..\:/Users/inava/Desktop/Repositorios/MobComp/QuestCalendarApp/QuestCalendarApp/QuestCalendar/app/src/main/res/layout/fragment_dashboard.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/inava/Desktop/Repositorios/MobComp/QuestCalendarApp/QuestCalendarApp/QuestCalendar/app/src/main/res/layout/fragment_home.xml" value="0.15390625" />
+        <entry key="..\:/Users/inava/Desktop/Repositorios/MobComp/QuestCalendarApp/QuestCalendarApp/QuestCalendar/app/src/main/res/menu/bottom_nav_menu.xml" value="0.15390625" />
+        <entry key="..\:/Users/inava/Desktop/Repositorios/MobComp/QuestCalendarApp/QuestCalendarApp/QuestCalendar/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.223046875" />
       </map>
     </option>
   </component>
