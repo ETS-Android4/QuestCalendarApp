@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity"
+    android:background="@color/qc_background"
+    android:orientation="vertical"
     android:padding="20dp"
-    android:background="#9EF6B7"
-    android:orientation="vertical">
+    tools:context=".LoginActivity">
 
 
     <TextView
@@ -16,8 +16,8 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/bungee"
         android:text="Welcome back"
-        android:textColor="#000"
         android:textAlignment="center"
+        android:textColor="#000"
         android:textSize="20sp" />
 
 
@@ -26,27 +26,27 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:orientation="vertical"
-        android:fontFamily="@font/roboto">
+        android:fontFamily="@font/roboto"
+        android:orientation="vertical">
 
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/username"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/username"
-            android:hint="Username"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginBottom="20dp"
             android:fontFamily="@font/roboto"
+            android:hint="Username"
+            android:textColorHint="#000"
             app:boxStrokeColor="#000"
             app:hintTextColor="#000"
-            app:placeholderTextColor="#000"
-            android:textColorHint="#000">
+            app:placeholderTextColor="#000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000"/>
+                android:textColor="#000" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -55,20 +55,20 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
-            app:boxStrokeColor="#000"
-            app:hintTextColor="#000"
-            app:placeholderTextColor="#000"
-            app:passwordToggleEnabled="true"
             android:layout_marginBottom="20dp"
             android:fontFamily="@font/roboto"
-            android:textColorHint="#000">
+            android:hint="Password"
+            android:textColorHint="#000"
+            app:boxStrokeColor="#000"
+            app:hintTextColor="#000"
+            app:passwordToggleEnabled="true"
+            app:placeholderTextColor="#000">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:textColor="#000"/>
+                android:textColor="#000" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -77,9 +77,9 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:backgroundTint="#000"
+            android:fontFamily="@font/roboto"
             android:text="LOG IN"
-            android:textColor="#fff"
-            android:fontFamily="@font/roboto"/>
+            android:textColor="#fff" />
 
         <Button
             android:id="@+id/signup_button"
