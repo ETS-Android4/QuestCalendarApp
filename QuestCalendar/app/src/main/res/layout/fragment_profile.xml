@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.notifications.ProfileFragment"
+    tools:context=".ui.profile.ProfileFragment"
     android:orientation="vertical"
     android:gravity="center_horizontal"
     android:paddingTop="20dp">
@@ -43,7 +43,7 @@
         android:layout_height="60dp"
         android:backgroundTint="#000"
         android:fontFamily="@font/roboto"
-        android:text="LOG IN"
+        android:text="EDIT PROFILE"
         android:textColor="#fff"
         app:strokeColor="#000"
         app:strokeWidth="1sp"

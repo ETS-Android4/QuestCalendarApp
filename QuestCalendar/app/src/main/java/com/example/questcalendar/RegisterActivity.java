@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
@@ -156,6 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
             UserHelperClass helperClass = new UserHelperClass(username, email, password);
             //gets the username as a identifier (idk how to create with uid)
             reference.child(username).setValue(helperClass);
+            Toast.makeText(getApplicationContext(), "Registered successfully", Toast.LENGTH_LONG).show();
             onLogin(v);
 
 
