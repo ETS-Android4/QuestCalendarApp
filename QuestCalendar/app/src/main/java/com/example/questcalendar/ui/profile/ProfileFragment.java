@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -20,6 +21,7 @@ public class ProfileFragment extends Fragment {
     public Button logout, notifications, achievements, editProfile, changeAvatar;
     private ProfileViewModel profileViewModel;
     private FragmentProfileBinding binding;
+    public TextView profileusername;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -28,6 +30,16 @@ public class ProfileFragment extends Fragment {
 
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        //receiving data of user
+        //Bundle bundle = this.getArguments();
+        //String username = bundle.getString("username");
+        //String email = bundle.getString("email");
+        //String password = bundle.getString("password");
+
+        //set username as username
+        //profileusername = root.findViewById(R.id.usernameProfile);
+        //profileusername.setText(username);
 
 
         //logout

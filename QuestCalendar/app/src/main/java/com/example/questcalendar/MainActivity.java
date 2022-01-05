@@ -4,10 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.questcalendar.ui.profile.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -17,11 +21,15 @@ import com.example.questcalendar.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    private static FragmentManager fragmentManager;
     private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        fragmentManager = getSupportFragmentManager();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -35,6 +43,24 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         //NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+
+        //receiving data of the user
+        Bundle extras = getIntent().getExtras();
+        String username = extras.getString("username");
+        String email = extras.getString("email");
+        String password = extras.getString("password");
+
+
+        //create a new bundle
+        Fragment profFragment = new ProfileFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("username", username);
+        bundle.putString("email", email);
+        bundle.putString("password", password);
+        profFragment.setArguments(bundle);
+
+        fragmentManager.beginTransaction().replace(R.id.nav_host_fragment_activity_main, profFragment).commit();
 
     }
 

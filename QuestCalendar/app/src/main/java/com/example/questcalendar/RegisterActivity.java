@@ -9,7 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +30,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     FirebaseDatabase rootNode;
     DatabaseReference reference;
+    private FirebaseAuth mAuth;
+    FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         regEmail = findViewById(R.id.email);
         regPassword = findViewById(R.id.password);
         regConfirmPassword = findViewById(R.id.confirm_password);
+
 
         //Change Activity when clicking
         regToLogin.setOnClickListener(v -> onLogin(v));
@@ -142,23 +150,23 @@ public class RegisterActivity extends AppCompatActivity {
     public void registerUser(View v) {
         rootNode = FirebaseDatabase.getInstance("https://questcalendar-c41e3-default-rtdb.europe-west1.firebasedatabase.app/");
         reference = rootNode.getReference("users");
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
 
         if(!validateUsername() | !validateEmail() | !validatePassword() | !validateConfirmPassword()){
             return;
         }
-
-
             //get all the values form the text fields
             String username = regUsername.getEditText().getText().toString();
             String email = regEmail.getEditText().getText().toString();
             String password = regPassword.getEditText().getText().toString();
             String confirmPassword = regConfirmPassword.getEditText().getText().toString();
 
-            UserHelperClass helperClass = new UserHelperClass(username, email, password);
-            //gets the username as a identifier (idk how to create with uid)
-            reference.child(username).setValue(helperClass);
-            Toast.makeText(getApplicationContext(), "Registered successfully", Toast.LENGTH_LONG).show();
-            onLogin(v);
+        UserHelperClass helperClass = new UserHelperClass(username, email, password);
+        //gets the username as a identifier (idk how to create with uid)
+        reference.child(username).setValue(helperClass);
+        Toast.makeText(getApplicationContext(), "Registered successfully", Toast.LENGTH_LONG).show();
+        onLogin(v);
 
 
 
