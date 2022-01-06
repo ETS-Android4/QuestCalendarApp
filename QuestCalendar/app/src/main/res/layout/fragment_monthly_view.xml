@@ -7,22 +7,17 @@
     android:orientation="vertical">
 
 
-    <TextView
-        android:id="@+id/selected_day"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/roboto"
-        android:text="TODAY"
-        android:gravity="center"
-        android:textColor="#000"/>
-
     <CalendarView
         android:id="@+id/monthly_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:background="#9EF6B7"
+        android:theme="@style/CalenderViewCustom"
+        android:weekDayTextAppearance="@style/CalenderViewWeekCustomText"/>
 
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        />
 </LinearLayout>

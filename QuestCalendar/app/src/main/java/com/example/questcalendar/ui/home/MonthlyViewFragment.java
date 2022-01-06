@@ -89,13 +89,13 @@ public class MonthlyViewFragment extends Fragment {
         // afficher la liste des donnees dans la ListView
         listView.setAdapter(adapter);
 
-        selectedDay = (TextView) view.findViewById(R.id.selected_day);
+        //selectedDay = (TextView) view.findViewById(R.id.selected_day);
         monthlyView = (CalendarView) view.findViewById(R.id.monthly_view);
         monthlyView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int dayOfMonth) {
                 String date = Integer.toString(dayOfMonth) + "." +  Integer.toString(month +1) + "." +  Integer.toString(year);
-                selectedDay.setText(date);
+                //selectedDay.setText(date);
             }
         });
 
