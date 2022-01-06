@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NotificationsActivity"
+    android:orientation="vertical"
+    android:padding="30dp"
+    android:background="@color/qc_background">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Do you want to receive notifications?"
+        android:fontFamily="@font/bungee"
+        android:textSize="30dp"
+        android:textColor="#000"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <Button
+        android:id="@+id/yes_notifications_button"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:backgroundTint="@color/ic_launcher_background"
+        android:fontFamily="@font/roboto"
+        android:text="YES"
+        android:textColor="#000" />
+
+    <Button
+        android:id="@+id/no_notifications_button"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#FE5B5B"
+        android:fontFamily="@font/roboto"
+        android:text="NO"
+        android:textColor="#000"
+        android:layout_marginLeft="50dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom">
+        <Button
+            android:id="@+id/back_button_noti"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:backgroundTint="#000"
+            android:fontFamily="@font/roboto"
+            android:text="GO BACK"
+            android:textColor="#FFF"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>
