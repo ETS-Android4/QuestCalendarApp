@@ -13,9 +13,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.questcalendar.R;
 import com.example.questcalendar.databinding.FragmentCalendarBinding;
 
-public class CalendarFragment extends AppCompatActivity {
+public class CalendarFragment extends Fragment {
 
     private CalendarViewModel homeViewModel;
     private FragmentCalendarBinding binding;
@@ -30,13 +31,16 @@ public class CalendarFragment extends AppCompatActivity {
 
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
+            getChildFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
-                    .add(R.id.fragment_container_view, MonthlyViewFragment.class, null)
+                    .add(R.id.calendar_view_fragment_container_view, MonthlyViewFragment.class, null)
                     .commit();
         }
         return root;
     }
+
+
+
 
     @Override
     public void onDestroyView() {
