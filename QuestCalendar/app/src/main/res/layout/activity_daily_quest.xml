@@ -101,7 +101,8 @@
             android:backgroundTint="#000"
             android:fontFamily="@font/roboto"
             android:text="GO BACK"
-            android:textColor="#FFF"/>
+            android:textColor="#FFF"
+            android:enabled="true"/>
     </LinearLayout>
 
 
