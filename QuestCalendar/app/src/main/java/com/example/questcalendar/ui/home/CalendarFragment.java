@@ -56,6 +56,8 @@ public class CalendarFragment extends Fragment {
             }
         });
 
+        /*
+        //Monthly
         //to use a fragment in a fragment
         getChildFragmentManager().beginTransaction()
                 .setReorderingAllowed(true)
@@ -63,6 +65,28 @@ public class CalendarFragment extends Fragment {
                 .commit();
 
         return root;
+
+         */
+
+
+        //Daily
+        //to use a fragment in a fragment
+        if (savedInstanceState == null) {
+            Bundle bundle = new Bundle();
+            bundle.putInt("day_of_month",6);
+            bundle.putInt("month",1);
+            bundle.putInt("year",2022);
+            bundle.putChar("day_of_weak",'T');
+
+            getChildFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.frequency_view_fragment, DailyViewFragment.class, bundle)
+                    .commit();
+        }
+
+        return root;
+
+
 
 
 
