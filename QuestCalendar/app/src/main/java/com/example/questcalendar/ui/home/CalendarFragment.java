@@ -2,6 +2,7 @@ package com.example.questcalendar.ui.home;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,6 +42,17 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onClick(View arg0) {
                 onDailyQuest();
+                dailyQuest.setEnabled(false);
+
+                new Handler().postDelayed(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // This method will be executed once the timer is over
+                        dailyQuest.setEnabled(true);
+
+                    }
+                },86400000);// set time as per your requirement
             }
         });
 
