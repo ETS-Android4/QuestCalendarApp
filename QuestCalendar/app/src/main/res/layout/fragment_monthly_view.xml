@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:id="@+id/currentDay"
+        android:id="@+id/selected_day"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto"
@@ -17,6 +17,12 @@
         android:textColor="#000"/>
 
     <CalendarView
+        android:id="@+id/monthly_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </LinearLayout>

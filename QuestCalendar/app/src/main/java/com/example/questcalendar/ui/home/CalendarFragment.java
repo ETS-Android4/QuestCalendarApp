@@ -44,14 +44,18 @@ public class CalendarFragment extends Fragment {
             }
         });
 
+        //to use a fragment in a fragment
+        getChildFragmentManager().beginTransaction()
+                .setReorderingAllowed(true)
+                .add(R.id.frequency_view_fragment, MonthlyViewFragment.class, null)
+                .commit();
+
         return root;
 
 
 
 
     }
-
-
 
 
     @Override
