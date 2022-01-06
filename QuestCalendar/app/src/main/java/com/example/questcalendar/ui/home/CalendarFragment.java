@@ -8,13 +8,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.questcalendar.databinding.FragmentCalendarBinding;
 
-public class CalendarFragment extends Fragment {
+public class CalendarFragment extends AppCompatActivity {
 
     private CalendarViewModel homeViewModel;
     private FragmentCalendarBinding binding;
@@ -28,6 +29,12 @@ public class CalendarFragment extends Fragment {
         View root = binding.getRoot();
 
 
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction()
+                    .setReorderingAllowed(true)
+                    .add(R.id.fragment_container_view, MonthlyViewFragment.class, null)
+                    .commit();
+        }
         return root;
     }
 
