@@ -25,20 +25,14 @@
             android:paddingRight="30dp"/>
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/register_button"
+            android:id="@+id/daily_quest_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@drawable/gradient_for_button"
+            android:backgroundTint="#00FF1E"
             android:fontFamily="@font/roboto"
             android:text="Daily Quest"
             android:textAlignment="center"
-            android:textColor="#fff"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.927"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            android:textColor="#fff" />
 
     </LinearLayout>
 
@@ -48,55 +42,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/dailyQuestButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/title_daily_quest"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/calendarTitle"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/monthlyViewButton"
+            android:id="@+id/monthly_view_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:text="@string/monthly_view_button"
-            app:layout_constraintEnd_toStartOf="@+id/dailyViewButton"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/calendarTitle" />
+            android:text="@string/monthly_view_button" />
 
         <Button
-            android:id="@+id/dailyViewButton"
+            android:id="@+id/daily_view_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="@string/daily_view_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/monthlyViewButton"
-            tools:layout_editor_absoluteY="72dp" />
+            android:text="@string/daily_view_button" />
 
     </LinearLayout>
 
-
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/calendar_view_fragment_container_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 </LinearLayout>
