@@ -5,19 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.home.CalendarFragment"
-    android:orientation="vertical">
+    android:background="#9EF6B7"
+    android:orientation="vertical"
+    android:padding="20dp">
 
-    <TextView
-        android:id="@+id/calendarTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/title_calendar"
-        app:layout_constraintEnd_toStartOf="@+id/dailyQuestButton"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/calendarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bungee"
+            android:text="CALENDAR"
+            android:textAlignment="viewStart"
+            android:textColor="#000"
+            android:textSize="25sp"
+            android:paddingRight="30dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/register_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@drawable/gradient_for_button"
+            android:fontFamily="@font/roboto"
+            android:text="Daily Quest"
+            android:textAlignment="center"
+            android:textColor="#fff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.927"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+    </LinearLayout>
+
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
