@@ -57,7 +57,10 @@ public class Date {
         this.year = nYear;
         dayOfWeek = getDayOfWeekFromString(dayOfWeekString);
 
-
+        checkDayOfMonth(nDayOfMonth, nMonth, nYear);
+        checkMonth(nMonth);
+        checkYear(nYear);
+        checkDayOfWeek(getDayOfWeekFromString(dayOfWeekString));
 
     }
 
@@ -66,7 +69,7 @@ public class Date {
     }
 
     public boolean isEqual(Date d) {
-        return ( ( this.dayOfWeek == d.getDayOfWeek() )
+        return ( ( this.dayOfMonth == d.getDayOfMonth() )
                 && ( this.month == d.getMonth() )
                 && (this.year == d.getYear() )
         );
@@ -103,8 +106,8 @@ public class Date {
             return 5;
         } else if (d.equals("Sun")) {
             return 6;
-        } else { //exception here
-            return 0;
+        } else {
+            throw new MyException("Pb with the date from Calendar");
         }
     }
 
@@ -146,7 +149,7 @@ public class Date {
 
     public Date getPreviousDay() throws MyException {
 
-        int previousDayOfWeek = ((dayOfWeek -1) % 7);
+        int previousDayOfWeek = ((dayOfWeek +6) % 7);
 
         //the 1st of March in a leap year
         if (month == 3 && dayOfMonth == 1 && IsLeap(this.year)) {
@@ -185,7 +188,7 @@ public class Date {
 
     private static void checkDayOfWeek(int day) throws MyException {
         if (day < 0 || day > 6) {
-            throw new MyException("That's not the name of a day of the week.");
+            throw new MyException("That's not the name of a day of the week: " + day);
         }
     }
 
