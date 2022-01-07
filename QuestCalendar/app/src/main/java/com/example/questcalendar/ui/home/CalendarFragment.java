@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.questcalendar.DailyQuestActivity;
 import com.example.questcalendar.R;
 import com.example.questcalendar.WelcomeActivity;
+import com.example.questcalendar.calendar.Date;
 import com.example.questcalendar.databinding.FragmentCalendarBinding;
 
 public class CalendarFragment extends Fragment {
@@ -32,6 +33,7 @@ public class CalendarFragment extends Fragment {
     private CalendarViewModel homeViewModel;
     private FragmentCalendarBinding binding;
     Button dailyQuest;
+    private Date selectedDate;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
