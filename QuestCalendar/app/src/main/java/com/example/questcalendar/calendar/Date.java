@@ -107,7 +107,7 @@ public class Date {
         } else if (d.equals("Sun")) {
             return 6;
         } else {
-            throw new MyException("Pb with the date from Calendar");
+            return 0;
         }
     }
 
