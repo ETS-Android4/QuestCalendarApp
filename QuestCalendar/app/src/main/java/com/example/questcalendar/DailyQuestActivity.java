@@ -73,7 +73,8 @@ public class DailyQuestActivity extends AppCompatActivity {
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                DataSnapshot random = dataSnapshot.child(String.valueOf(getRandom(1,3)));
+                //get random between 1 and X+1
+                DataSnapshot random = dataSnapshot.child(String.valueOf(getRandom(1,8)));
                 Log.d("valor", String.valueOf(random));
                 title.setText(random.child("title").getValue().toString());
                 description.setText(random.child("description").getValue().toString());
