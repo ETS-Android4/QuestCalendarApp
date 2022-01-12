@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.home.MonthlyViewFragment">
+    tools:context=".ui.home.MonthlyViewFragment"
+    android:orientation="vertical">
 
-    <!-- TODO: Update blank fragment layout -->
+
+    <CalendarView
+        android:id="@+id/monthly_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#9EF6B7"
+        android:theme="@style/CalenderViewCustom"
+        android:weekDayTextAppearance="@style/CalenderViewWeekCustomText"/>
+
     <TextView
+        android:id="@+id/task_nb"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        android:text="TASK?"
+        android:textColor="#000" />
 
-</FrameLayout>
+
+
+</LinearLayout>
