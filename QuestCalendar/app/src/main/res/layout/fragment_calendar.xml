@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.CalendarFragment"
+    android:background="#9EF6B7"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/calendarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bungee"
+            android:text="CALENDAR"
+            android:textAlignment="viewStart"
+            android:textColor="#000"
+            android:textSize="25sp"
+            android:paddingRight="30dp"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/daily_quest_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#00FF1E"
+            android:fontFamily="@font/roboto"
+            android:text="Daily Quest"
+            android:textAlignment="center"
+            android:textColor="#fff" />
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/monthly_view_button"
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#ffff"
+            android:fontFamily="@font/roboto"
+            android:text="MONTHLY"
+            android:textColor="#000"
+            app:strokeColor="#000"
+            app:strokeWidth="1sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/daily_view_button"
+            android:layout_width="150sp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#ffff"
+            android:fontFamily="@font/roboto"
+            android:text="DAILY"
+            android:textColor="#000"
+            app:strokeColor="#000"
+            app:strokeWidth="1sp"
+            android:layout_marginLeft="35sp"/>
+
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/frequency_view_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.ProfileFragment"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:paddingTop="20dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profilePic"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:src="@mipmap/qc_icon_template_round"
+        app:civ_border_color="#FFff"
+        app:civ_border_width="2dp" />
+
+    <TextView
+        android:id="@+id/usernameProfile"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:fontFamily="@font/bungee"
+        android:text="Igna"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="30dp" />
+    <!-- nivel (string static) : username level -->
+    <TextView
+        android:id="@+id/usernameLevel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/bungee"
+        android:text="Level: 1"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="15dp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/login_button"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#000"
+        android:fontFamily="@font/roboto"
+        android:text="EDIT PROFILE"
+        android:textColor="#fff"
+        app:strokeColor="#000"
+        app:strokeWidth="1sp"
+        android:gravity="center"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/achievements_button"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#ffff"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        android:text="ACHIEVEMENTS"
+        android:textColor="#000"
+        app:strokeColor="#000"
+        app:strokeWidth="1sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/notifications_button"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#ffff"
+        android:fontFamily="@font/roboto"
+        android:gravity="center"
+        android:text="NOTIFICATIONS"
+        android:textColor="#000"
+        app:strokeColor="#000"
+        app:strokeWidth="1sp" />
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/avatar_button"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#ffff"
+        android:fontFamily="@font/roboto"
+        android:text="CHANGE AVATAR"
+        android:textColor="#000"
+        app:strokeColor="#000"
+        app:strokeWidth="1sp"
+        android:gravity="center"/>
+
+    
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/logout_button"
+        android:layout_width="250dp"
+        android:layout_height="60dp"
+        android:backgroundTint="#FE5B5B"
+        android:fontFamily="@font/roboto"
+        android:text="LOG OUT"
+        android:textColor="#000"
+        app:strokeColor="#000"
+        app:strokeWidth="1sp"
+        android:gravity="center"/>
+
+</LinearLayout>
