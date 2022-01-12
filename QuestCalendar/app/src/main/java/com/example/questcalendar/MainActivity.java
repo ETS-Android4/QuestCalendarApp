@@ -45,22 +45,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(binding.navView, navController);
 
 
-        //receiving data of the user
-        Bundle extras = getIntent().getExtras();
-        String username = extras.getString("username");
-        String email = extras.getString("email");
-        String password = extras.getString("password");
-
-
-        //create a new bundle
-        Fragment profFragment = new ProfileFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("username", username);
-        bundle.putString("email", email);
-        bundle.putString("password", password);
-        profFragment.setArguments(bundle);
-
-        fragmentManager.beginTransaction().replace(R.id.nav_host_fragment_activity_main, profFragment).commit();
 
     }
 
