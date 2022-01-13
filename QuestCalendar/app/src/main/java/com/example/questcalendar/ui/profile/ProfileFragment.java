@@ -16,12 +16,17 @@ import com.example.questcalendar.NotificationsActivity;
 import com.example.questcalendar.R;
 import com.example.questcalendar.WelcomeActivity;
 import com.example.questcalendar.databinding.FragmentProfileBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class ProfileFragment extends Fragment {
     public Button logout, notifications, achievements, editProfile, changeAvatar;
     private ProfileViewModel profileViewModel;
     private FragmentProfileBinding binding;
     public TextView profileusername;
+    FirebaseAuth mAuth;
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -80,8 +85,15 @@ public class ProfileFragment extends Fragment {
 
 
     private void onLogout () {
-        Intent i = new Intent(getActivity(), WelcomeActivity.class);
-        startActivity(i);
+        if(mAuth == null){
+            getActivity().finish();
+            onWelcome();
+        }else{
+            getActivity().finish();
+            mAuth.signOut();
+            onWelcome();
+        }
+
 
     }
 
@@ -89,6 +101,11 @@ public class ProfileFragment extends Fragment {
         Intent i = new Intent(getActivity(), NotificationsActivity.class);
         startActivity(i);
 
+    }
+
+    private void onWelcome(){
+        Intent i = new Intent(getActivity(), WelcomeActivity.class);
+        startActivity(i);
     }
 
 
