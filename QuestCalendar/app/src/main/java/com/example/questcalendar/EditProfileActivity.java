@@ -35,6 +35,7 @@ public class EditProfileActivity extends AppCompatActivity {
         //Hooks
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
+        saveButton = findViewById(R.id.save_button);
 
 
 
@@ -55,7 +56,12 @@ public class EditProfileActivity extends AppCompatActivity {
 
 
         //Cuando pulsemos el boton de guardar, que se actualicen los datos
-
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSave(v);
+            }
+        });
 
 
     }
