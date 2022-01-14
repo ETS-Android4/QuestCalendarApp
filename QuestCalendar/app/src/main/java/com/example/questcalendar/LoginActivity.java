@@ -98,13 +98,15 @@ public class LoginActivity extends AppCompatActivity {
         String userEnteredUsername = username.getEditText().getText().toString().trim();
         String userEnteredPassword = password.getEditText().getText().toString().trim();
 
-        DatabaseReference reference = FirebaseDatabase.getInstance("https://questcalendar-c41e3-default-rtdb.europe-west1.firebasedatabase.app/")
-                .getReference("users");
-        Query checkUser = reference.orderByChild("username").equalTo(userEnteredUsername);
-
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-        String uid = mAuth.getUid();
+        String uid = mUser.getUid();
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://questcalendar-c41e3-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("users").child(uid);
+
+
+
+        Query checkUser = reference.orderByChild("username");
 
         checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -113,18 +115,21 @@ public class LoginActivity extends AppCompatActivity {
                     username.setError(null);
                     username.setErrorEnabled(false);
 
-                    String emailFromDB = dataSnapshot.child(uid).child("email")
+                    String objeto = dataSnapshot.getValue().toString();
+                    String emailFromDB = dataSnapshot.child("email")
                             .getValue(String.class);
 
-                    String passwordFromDB = dataSnapshot.child(uid).child("password")
+                    String passwordFromDB = dataSnapshot.child("password")
+                            .getValue(String.class);
+
+                    String usernameFromDB = dataSnapshot.child("username")
                             .getValue(String.class);
 
                     if(passwordFromDB.equals(userEnteredPassword)){
                         username.setError(null);
                         username.setErrorEnabled(false);
 
-                        String usernameFromDB = dataSnapshot.child(uid).child("username")
-                                .getValue(String.class);
+
 
                         mAuth.signInWithEmailAndPassword(emailFromDB, passwordFromDB).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override

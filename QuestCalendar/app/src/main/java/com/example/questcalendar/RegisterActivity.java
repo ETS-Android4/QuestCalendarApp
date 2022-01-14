@@ -148,7 +148,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void registerUser(View v) {
-        PerforAuth();
         rootNode = FirebaseDatabase.getInstance("https://questcalendar-c41e3-default-rtdb.europe-west1.firebasedatabase.app/");
         reference = rootNode.getReference("users");
         mAuth = FirebaseAuth.getInstance();
@@ -183,9 +182,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
 
-    private void PerforAuth(){
-
-    }
 
     public Boolean UserNotExists(){
         //true when the user doesn't exists
