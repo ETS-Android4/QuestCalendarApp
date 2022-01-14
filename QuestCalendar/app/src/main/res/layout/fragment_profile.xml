@@ -7,7 +7,7 @@
     tools:context=".ui.profile.ProfileFragment"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:paddingTop="20dp">
+    android:padding="20dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profilePic"
