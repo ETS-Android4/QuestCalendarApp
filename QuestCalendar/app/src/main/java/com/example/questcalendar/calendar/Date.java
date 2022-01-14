@@ -12,6 +12,7 @@ public class Date {
     private final static int MAX_DAY_OF_MONTH[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 
+    /* */
     private int dayOfMonth;
     private int month;
     private int year;
@@ -35,7 +36,9 @@ public class Date {
     }
 
     public Date() throws MyException {
+        /*
         Calendar c = Calendar.getInstance();
+        c.setFirstDayOfWeek(Calendar.MONDAY);
         SimpleDateFormat dayOfMonthSDF = new SimpleDateFormat("dd");
         String dayOfMonthString = dayOfMonthSDF.format(c.getTime());
         SimpleDateFormat dayOfWeekSDF = new SimpleDateFormat("EEE");
@@ -62,10 +65,25 @@ public class Date {
         checkYear(nYear);
         checkDayOfWeek(getDayOfWeekFromString(dayOfWeekString));
 
+         */
+
+        Calendar c = Calendar.getInstance();
+
+        dayOfMonth = c.get(Calendar.DAY_OF_MONTH);
+        this.month = c.get(Calendar.MONTH) +1;
+        this.year = c.get(Calendar.YEAR);
+        dayOfWeek = c.get(Calendar.DAY_OF_WEEK) -1;
+
+        checkDayOfMonth(dayOfMonth, month, year);
+        checkMonth(month);
+        checkYear(year);
+        checkDayOfWeek(dayOfWeek);
+
     }
 
     public String toString() {
-        return DAYS_OF_WEEK[dayOfWeek] + " " + Integer.toString(dayOfMonth) + " " +  MONTHS[month-1] + " " +  Integer.toString(year);
+        return Integer.toString(dayOfMonth) + " " +  MONTHS[month-1] + " " +  Integer.toString(year);
+        //return DAYS_OF_WEEK[dayOfWeek] + " " + Integer.toString(dayOfMonth) + " " +  MONTHS[month-1] + " " +  Integer.toString(year);
     }
 
     public boolean isEqual(Date d) {

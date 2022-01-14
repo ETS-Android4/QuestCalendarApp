@@ -64,10 +64,11 @@ public class MonthlyViewFragment extends Fragment {
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int dayOfMonth) {
                 //String date = Integer.toString(dayOfMonth) + "." +  Integer.toString(month) + "." +  Integer.toString(year);
                 Calendar calendar = Calendar.getInstance();
+                calendar.setFirstDayOfWeek(Calendar.MONDAY);
                 calendar.set(year, month, dayOfMonth);
                 int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
                 //selectedDay.setText(date);
-                selectedDate = new Date(dayOfMonth, month +1, year, ((dayOfWeek +5) % 7));
+                selectedDate = new Date(dayOfMonth, month +1, year, (dayOfWeek -1));
                 //debug.setText(date + " " + selectedDate.toString());
                 displayTaskNb(view);
             }
