@@ -33,6 +33,7 @@ public class AddTaskFragment extends Fragment {
     int hour, minutes;
     private AddTaskViewModel addTaskViewModel;
     private FragmentAddTaskBinding binding;
+    private Button daily, monthly, addTask;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -80,6 +81,13 @@ public class AddTaskFragment extends Fragment {
             }
         });
 
+
+        //frequency
+        daily = root.findViewById(R.id.toggle_button_daily);
+        monthly = root.findViewById(R.id.toggle_button_monthly);
+
+        //add task
+        addTask = root.findViewById(R.id.add_task_button);
 
         //final TextView textView = binding.textDashboard;
         addTaskViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
