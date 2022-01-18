@@ -17,7 +17,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         //logo
         ImageView logo = (ImageView) findViewById(R.id.logo);
-        logo.setImageResource(R.drawable.logov1);
+        logo.setImageResource(R.drawable.calendar_logo);
 
         final Button login = findViewById(R.id.login_button);
         login.setOnClickListener(v -> onLogin(v));
