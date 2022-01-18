@@ -12,6 +12,8 @@ import com.example.questcalendar.calendar.Date;
 import com.example.questcalendar.calendar.Task;
 import com.example.questcalendar.calendar.TaskComparator;
 import com.example.questcalendar.calendar.exceptions.MyException;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -81,26 +83,46 @@ public class TaskManager {
     //to get the year of a task
     private final static String YEAR = "year";
 
+    //to get the year of a task
+    private final static String MAX_TASK_ID = "maximum";
+
     //when the description is empty
     private final static String DEFAULT_DESCRIPTION = "";
 
     //reference to the database
     DatabaseReference reference;
 
-    public TaskManager(Date day) {
+    //reference to the database
+    DatabaseReference userReference;
+
+    //get the current logged user
+    FirebaseAuth mAuth;
+    FirebaseUser mUser;
+
+    public TaskManager(Date day, int maxTI) {
         //set the date
         this.currentDay = day;
         this.daily = new ArrayList<Task>();
         this.monthly = new ArrayList<Task>();
         this.punctual = new ArrayList<Task>();
         this.tasksOfTheDay = new ArrayList<Task>();
-        this.maxTaskId = 0;
-        this.reference = FirebaseDatabase.getInstance(QUEST_CALENDAR_LINK).getReference(USERS).child(CURRENT_USERNAME).child(TASKS);
+
+        this.mAuth = FirebaseAuth.getInstance();
+        this.mUser = mAuth.getCurrentUser();
+        this.userReference = FirebaseDatabase.getInstance(QUEST_CALENDAR_LINK).getReference(USERS).child(mUser.getUid());
+        this.reference = userReference.child(TASKS);
+        this.maxTaskId = maxTI;
+
+
+
+
+
+
 
 
         //get the tasks from the database
 
-        this.reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        this.reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -142,6 +164,9 @@ public class TaskManager {
 
                         Task currentTask = new Task(id, title, description, date, hour, frequency);
 
+                        if (currentTask.getId() > maxTaskId) {
+                            maxTaskId = currentTask.getId();
+                        }
                         //adding the task in the right list
                         if (frequency == Task.DAILY) {
                             daily.add(currentTask);
@@ -162,35 +187,7 @@ public class TaskManager {
 
         });
 
-        //finding the task of the current day
 
-        for (Task d : daily) {
-            tasksOfTheDay.add(d);
-
-            if (d.getId() > this.maxTaskId) {
-                this.maxTaskId = d.getId();
-            }
-        }
-
-        for (Task m : monthly) {
-            if (m.getDay().getDayOfMonth() == currentDay.getDayOfMonth()) {
-                tasksOfTheDay.add(m);
-            }
-
-            if (m.getId() > this.maxTaskId) {
-                this.maxTaskId = m.getId();
-            }
-        }
-
-        for (Task p : punctual) {
-            if (p.getDay().isEqual(currentDay)) {
-                tasksOfTheDay.add(p);
-            }
-
-            if (p.getId() > this.maxTaskId) {
-                this.maxTaskId = p.getId();
-            }
-        }
 
 
 
@@ -198,6 +195,10 @@ public class TaskManager {
 
     //add the task t in the database
     public void addTask(Task t) {
+
+        //finding the task of the current day
+        findTasksOfTheDay();
+
 
         //use an helper
         String titleNewTask = t.getTitle();
@@ -210,6 +211,7 @@ public class TaskManager {
 
 
             //find the id
+
         this.maxTaskId = this.maxTaskId +1;
         String idNewTask = Integer.toString(this.maxTaskId);
 
@@ -217,6 +219,7 @@ public class TaskManager {
 
 
         //gets the username as a identifier
+        this.reference = FirebaseDatabase.getInstance(QUEST_CALENDAR_LINK).getReference(USERS).child(mUser.getUid()).child(TASKS);
         reference.child(idNewTask).setValue(newTask);
 
 
@@ -239,11 +242,16 @@ public class TaskManager {
         this.tasksOfTheDay = new ArrayList<Task>();
 
         //finding the task of the current day
+        findTasksOfTheDay();
+    }
+
+    private void findTasksOfTheDay() {
         for (Task d : daily) {
             tasksOfTheDay.add(d);
 
             if (d.getId() > this.maxTaskId) {
                 this.maxTaskId = d.getId();
+                System.out.println(this.maxTaskId);
             }
         }
 
@@ -254,6 +262,7 @@ public class TaskManager {
 
             if (m.getId() > this.maxTaskId) {
                 this.maxTaskId = m.getId();
+                System.out.println(this.maxTaskId);
             }
         }
 
@@ -264,11 +273,12 @@ public class TaskManager {
 
             if (p.getId() > this.maxTaskId) {
                 this.maxTaskId = p.getId();
+                System.out.println(this.maxTaskId);
             }
         }
     }
 
-
-
-
+    public int getMaxTaskId() {
+        return maxTaskId;
+    }
 }

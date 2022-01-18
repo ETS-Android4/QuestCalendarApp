@@ -56,7 +56,7 @@ public class MonthlyViewFragment extends Fragment {
 
         selectedDate = new Date();
         taskNb = 0;
-
+        taskManager = new TaskManager(selectedDate);
 
 
         //selectedDay = (TextView) view.findViewById(R.id.selected_day);
@@ -77,7 +77,7 @@ public class MonthlyViewFragment extends Fragment {
             }
         });
 
-        taskManager = new TaskManager(selectedDate);
+
         displayTaskNb(view);
 
         return view;

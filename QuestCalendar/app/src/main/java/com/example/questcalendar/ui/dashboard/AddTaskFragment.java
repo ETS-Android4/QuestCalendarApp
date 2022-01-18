@@ -111,7 +111,6 @@ public class AddTaskFragment extends Fragment {
         addTask.setOnClickListener(new View.OnClickListener() {
             @Override
 
-            //ceci n'est pas robuste
             public void onClick(View view) {
                 int idNewTask = 0;
 
@@ -155,8 +154,11 @@ public class AddTaskFragment extends Fragment {
 
                     Task newTask = new Task(idNewTask, titleNewTask, descriptionNewTask, pickedDate, hour, frequencyNewTask);
 
-                    TaskManager taskManager = new TaskManager(pickedDate);
+                    TaskManager taskManager = new TaskManager(pickedDate, 0);
+
+                    Toast.makeText(view.getContext().getApplicationContext(), "max id task" + taskManager.getMaxTaskId(), Toast.LENGTH_LONG).show();
                     taskManager.addTask(newTask);
+                    Toast.makeText(view.getContext().getApplicationContext(), "max id task" + taskManager.getMaxTaskId(), Toast.LENGTH_LONG).show();
                     Toast.makeText(view.getContext().getApplicationContext(), "Task added successfully", Toast.LENGTH_LONG).show();
                 }
             }
