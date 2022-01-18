@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -15,8 +16,11 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class EditProfileActivity extends AppCompatActivity {
 
@@ -35,7 +39,13 @@ public class EditProfileActivity extends AppCompatActivity {
         //Hooks
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
+        String uid = mUser.getUid();
+
         saveButton = findViewById(R.id.save_button);
+        updUsername = findViewById(R.id.edit_username);
+        updEmail =findViewById(R.id.edit_email);
+        updPassword = findViewById(R.id.edit_password);
+        updConfirmPassword = findViewById(R.id.edit_confirm_password);
 
 
 
@@ -51,7 +61,34 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
 
-        //En on create hacemos la request para recibir los datos
+        //En on create hacemos la request para recibir los datos y ponerlo
+        rootNode = FirebaseDatabase.getInstance("https://questcalendar-c41e3-default-rtdb.europe-west1.firebasedatabase.app/");
+        reference = rootNode.getReference("users");
+
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                DataSnapshot user = dataSnapshot.child(uid);
+                //getting and setting username
+                String username = user.child("username").getValue().toString();
+                updUsername.getEditText().setText(username);
+                //getting and setting password
+                String password = user.child("password").getValue().toString();
+                updPassword.getEditText().setText(password);
+                //getting and setting email
+                String email = user.child("email").getValue().toString();
+                updEmail.getEditText().setText(email);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+
+
+
 
 
 
@@ -85,6 +122,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
         UserHelperClass helperClass = new UserHelperClass(username, email, password);
 
+        mUser.updateEmail(email);
         reference.child(mUser.getUid()).setValue(helperClass);
         Toast.makeText(getApplicationContext(), "Updated successfully", Toast.LENGTH_LONG).show();
         onMain(v);
