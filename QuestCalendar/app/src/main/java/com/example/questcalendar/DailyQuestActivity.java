@@ -13,6 +13,8 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,6 +38,18 @@ public class DailyQuestActivity extends AppCompatActivity {
         final Button goBack = findViewById(R.id.back_button_quest);
         goBack.setOnClickListener(v -> onBack(v));
 
+
+        FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+
+                }else{
+                    onWelcome();
+                }
+            }
+        });
 
 
         //checkbox
@@ -63,6 +77,8 @@ public class DailyQuestActivity extends AppCompatActivity {
     public void getQuest(){
         DatabaseReference reference = FirebaseDatabase.getInstance("https://questcalendar-c41e3-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("quests");
+
+
 
 
         //Hooks
@@ -99,6 +115,13 @@ public class DailyQuestActivity extends AppCompatActivity {
         Random random = new Random();
         return random.nextInt(max - min) + min;
     }
+
+
+    private void onWelcome(){
+        Intent i = new Intent(this, WelcomeActivity.class);
+        startActivity(i);
+    }
+
 
 
 }

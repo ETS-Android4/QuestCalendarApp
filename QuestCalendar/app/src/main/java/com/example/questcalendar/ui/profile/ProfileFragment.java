@@ -2,6 +2,7 @@ package com.example.questcalendar.ui.profile;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +13,28 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.questcalendar.EditProfileActivity;
 import com.example.questcalendar.NotificationsActivity;
 import com.example.questcalendar.R;
 import com.example.questcalendar.WelcomeActivity;
 import com.example.questcalendar.databinding.FragmentProfileBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class ProfileFragment extends Fragment {
     public Button logout, notifications, achievements, editProfile, changeAvatar;
     private ProfileViewModel profileViewModel;
     private FragmentProfileBinding binding;
     public TextView profileusername;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -30,16 +43,26 @@ public class ProfileFragment extends Fragment {
 
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        //getting the user uid
+        String uid= mAuth.getCurrentUser().getUid().toString();
+        profileusername = root.findViewById(R.id.usernameProfile);
 
-        //receiving data of user
-        //Bundle bundle = this.getArguments();
-        //String username = bundle.getString("username");
-        //String email = bundle.getString("email");
-        //String password = bundle.getString("password");
+        setUsername(uid, profileusername);
 
-        //set username as username
-        //profileusername = root.findViewById(R.id.usernameProfile);
-        //profileusername.setText(username);
+
+
+        //edit
+        editProfile = (Button) root.findViewById(R.id.edit_button);
+        editProfile.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+
+                onEdit();
+
+            }
+        });
+
 
 
         //logout
@@ -80,8 +103,15 @@ public class ProfileFragment extends Fragment {
 
 
     private void onLogout () {
-        Intent i = new Intent(getActivity(), WelcomeActivity.class);
-        startActivity(i);
+        if(mAuth == null){
+            getActivity().finish();
+            onWelcome();
+        }else{
+            getActivity().finish();
+            mAuth.signOut();
+            onWelcome();
+        }
+
 
     }
 
@@ -91,8 +121,41 @@ public class ProfileFragment extends Fragment {
 
     }
 
+    private void onWelcome(){
+        Intent i = new Intent(getActivity(), WelcomeActivity.class);
+        startActivity(i);
+    }
 
 
+    public void setUsername(String uid, TextView profileusername){
+
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://questcalendar-c41e3-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("users");
+
+
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                //get random between 1 and X+1
+                DataSnapshot user = dataSnapshot.child(uid);
+                String usernameDB = user.child("username").getValue().toString();
+                profileusername.setText(usernameDB);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+
+    }
+
+
+    private void onEdit(){
+        Intent i = new Intent(getActivity(), EditProfileActivity.class);
+        startActivity(i);
+    }
 
 
 }

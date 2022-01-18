@@ -30,7 +30,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     FirebaseDatabase rootNode;
     DatabaseReference reference;
-    private FirebaseAuth mAuth;
+    FirebaseAuth mAuth;
     FirebaseUser mUser;
 
     @Override
@@ -111,8 +111,8 @@ public class RegisterActivity extends AppCompatActivity {
         } else if(!val.matches(passwordVal)){
             regPassword.setError("Password is too weak");
             return false;
-        }else if(val.length()<4){
-            regPassword.setError("Password cannot be less than 4 letters");
+        }else if(val.length()<6){
+            regPassword.setError("Password cannot be less than 6 characters");
             return false;
         }
         else{
@@ -164,13 +164,24 @@ public class RegisterActivity extends AppCompatActivity {
 
         UserHelperClass helperClass = new UserHelperClass(username, email, password);
         //gets the username as a identifier (idk how to create with uid)
-        reference.child(username).setValue(helperClass);
-        Toast.makeText(getApplicationContext(), "Registered successfully", Toast.LENGTH_LONG).show();
-        onLogin(v);
 
 
+        mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    reference.child(mUser.getUid()).setValue(helperClass);
+                    Toast.makeText(getApplicationContext(), "Registered successfully", Toast.LENGTH_LONG).show();
+                    onLogin(v);
+                }else{
+                    Toast.makeText(getApplicationContext(), "This account already exists", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
     }
+
+
 
     public Boolean UserNotExists(){
         //true when the user doesn't exists
@@ -217,6 +228,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void onLogin(View view){
         Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 }
