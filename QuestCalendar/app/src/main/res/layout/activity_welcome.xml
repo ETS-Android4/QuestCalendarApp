@@ -24,7 +24,7 @@
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="300dp"
-        android:src="@drawable/logov1" />
+        android:src="@drawable/calendar_logo" />
 
     <TextView
         android:id="@+id/quest_calendar_text"
