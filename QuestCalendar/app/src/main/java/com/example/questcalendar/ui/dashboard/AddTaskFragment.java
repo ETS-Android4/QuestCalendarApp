@@ -1,5 +1,6 @@
 package com.example.questcalendar.ui.dashboard;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +22,11 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.questcalendar.MainActivity;
 import com.example.questcalendar.R;
+import com.example.questcalendar.calendar.Date;
+import com.example.questcalendar.calendar.Task;
 import com.example.questcalendar.databinding.FragmentAddTaskBinding;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.sql.Time;
 import java.util.Calendar;
@@ -33,7 +39,11 @@ public class AddTaskFragment extends Fragment {
     int hour, minutes;
     private AddTaskViewModel addTaskViewModel;
     private FragmentAddTaskBinding binding;
-    private Button daily, monthly, addTask;
+    private Button addTask;
+    private MaterialButton daily, monthly;
+    private TextInputLayout title, description;
+    private Date pickedDate;
+    private boolean hourPicked;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -42,6 +52,13 @@ public class AddTaskFragment extends Fragment {
 
         binding = FragmentAddTaskBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        //select a title
+        title = root.findViewById(R.id.task_title);
+
+        //select a title
+        description = root.findViewById(R.id.task_description);
+
 
         //select date
         dateButton = root.findViewById(R.id.date_picker_button);
@@ -60,6 +77,7 @@ public class AddTaskFragment extends Fragment {
 
         //select hour
         hourButton = root.findViewById(R.id.hour_picker_button);
+        hourPicked = false;
         //init
 
         //onclick
@@ -71,7 +89,9 @@ public class AddTaskFragment extends Fragment {
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         hour = hourOfDay;
                         minutes = minutes;
-                        hourButton.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
+                        //hourButton.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
+                        hourButton.setText(Integer.toString(hourOfDay));
+                        hourPicked = true;
                     }
                 };
 
@@ -88,6 +108,59 @@ public class AddTaskFragment extends Fragment {
 
         //add task
         addTask = root.findViewById(R.id.add_task_button);
+        addTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+
+            //ceci n'est pas robuste
+            public void onClick(View view) {
+                int idNewTask = 0;
+
+                //to validate
+                String titleNewTask = title.getEditText().getText().toString();
+
+                String descriptionNewTask = description.getEditText().getText().toString();
+
+                //String hourNewTask = hourButton.getText().toString();
+
+                int frequencyNewTask;
+                if (daily.isChecked()) {
+                    frequencyNewTask = Task.DAILY;
+                } else if (monthly.isChecked()) {
+                    frequencyNewTask = Task.MONTHLY;
+                } else {
+                    frequencyNewTask = Task.PUNCTUAL;
+                }
+
+                int taskValidated = 1;
+
+                //verifying the title of the task
+                if (titleNewTask.isEmpty()) {
+                    title.setError("Title cannot be empty");
+                    taskValidated = 0;
+                }
+
+                //verifying that a date has been picked
+                if (pickedDate == null) {
+                    dateButton.setError("Pick a date, please");
+                    taskValidated = 0;
+                }
+
+                //verifying that an hour has been picked
+                if (!hourPicked) {
+                    hourButton.setError("Pick an hour, please");
+                    taskValidated = 0;
+                }
+
+                if (taskValidated == 1) {
+
+                    Task newTask = new Task(idNewTask, titleNewTask, descriptionNewTask, pickedDate, hour, frequencyNewTask);
+
+                    TaskManager taskManager = new TaskManager(pickedDate);
+                    taskManager.addTask(newTask);
+                    Toast.makeText(view.getContext().getApplicationContext(), "Task added successfully", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
 
         //final TextView textView = binding.textDashboard;
         addTaskViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -110,6 +183,7 @@ public class AddTaskFragment extends Fragment {
              month = month +1;
              String date = month + "/" + dayOfMonth + "/" + year;
              dateButton.setText(date);
+             pickedDate = new Date(dayOfMonth, month, year, 0);
         }
     };
 
