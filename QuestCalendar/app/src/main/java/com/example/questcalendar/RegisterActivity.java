@@ -162,7 +162,7 @@ public class RegisterActivity extends AppCompatActivity {
             String password = regPassword.getEditText().getText().toString();
             String confirmPassword = regConfirmPassword.getEditText().getText().toString();
 
-        UserHelperClass helperClass = new UserHelperClass(username, email, password);
+        UserHelperClass helperClass = new UserHelperClass(username, email, password,1,0,1);
         //gets the username as a identifier (idk how to create with uid)
 
 

@@ -1,5 +1,7 @@
 package com.example.questcalendar.ui.profile;
 
+import static java.lang.Math.pow;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,7 +32,7 @@ public class ProfileFragment extends Fragment {
     public Button logout, notifications, achievements, editProfile, changeAvatar;
     private ProfileViewModel profileViewModel;
     private FragmentProfileBinding binding;
-    public TextView profileusername;
+    public TextView profileusername, profilelevel, profileExperience;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
 
@@ -46,8 +48,12 @@ public class ProfileFragment extends Fragment {
         //getting the user uid
         String uid= mAuth.getCurrentUser().getUid().toString();
         profileusername = root.findViewById(R.id.usernameProfile);
+        profilelevel = root.findViewById(R.id.usernameLevel);
+        profileExperience = root.findViewById(R.id.usernameExperience);
 
         setUsername(uid, profileusername);
+        setLevel(uid, profilelevel);
+        setExperience(uid, profileExperience);
 
 
 
@@ -151,6 +157,55 @@ public class ProfileFragment extends Fragment {
 
     }
 
+
+    public void setLevel(String uid, TextView profilelevel){
+
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://questcalendar-c41e3-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("users");
+
+
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                DataSnapshot user = dataSnapshot.child(uid);
+                String levelDB = user.child("level").getValue().toString();
+                profilelevel.setText("lvl " +levelDB);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+
+    }
+
+    public void setExperience(String uid, TextView profileExperience){
+
+        DatabaseReference reference = FirebaseDatabase.getInstance("https://questcalendar-c41e3-default-rtdb.europe-west1.firebasedatabase.app/")
+                .getReference("users");
+
+
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                DataSnapshot user = dataSnapshot.child(uid);
+                String levelDB = user.child("level").getValue().toString();
+                int level = Integer.parseInt(levelDB);
+                String experienceDB = user.child("experience").getValue().toString();
+                int systemLevel = 50 + (int) pow(level, 2);
+                profileExperience.setText("exp: "+ experienceDB + " / " + systemLevel);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+
+    }
 
     private void onEdit(){
         Intent i = new Intent(getActivity(), EditProfileActivity.class);

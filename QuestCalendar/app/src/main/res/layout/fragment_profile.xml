@@ -26,16 +26,39 @@
         android:textAlignment="center"
         android:textColor="#000"
         android:textSize="30dp" />
-    <!-- nivel (string static) : username level -->
-    <TextView
-        android:id="@+id/usernameLevel"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/bungee"
-        android:text="Level: 1"
-        android:textAlignment="center"
-        android:textColor="#000"
-        android:textSize="15dp" />
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/usernameLevel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bungee"
+            android:text="Lvl 1"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:textSize="15dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/usernameExperience"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bungee"
+            android:text="exp: 0/50"
+            android:textAlignment="center"
+            android:textColor="#000"
+            android:textSize="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="20dp"/>
+
+    </LinearLayout>
+    <!-- nivel (string static) : username level -->
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/edit_button"
