@@ -174,7 +174,7 @@ public class RegisterActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Registered successfully", Toast.LENGTH_LONG).show();
                     onLogin(v);
                 }else{
-
+                    Toast.makeText(getApplicationContext(), "This account already exists", Toast.LENGTH_LONG).show();
                 }
             }
         });

@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //variables
     Button login_btn;
-    TextInputLayout username, password;
+    TextInputLayout mail, password;
     FirebaseAuth mAuth;
     FirebaseUser mUser;
 
@@ -40,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //Hooks
         login_btn = findViewById(R.id.login_button);
-        username = findViewById(R.id.username);
+        mail = findViewById(R.id.mail);
         password = findViewById(R.id.password);
 
 
@@ -51,16 +51,20 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private Boolean validateUsername(){
-        String val = username.getEditText().getText().toString();
+    private Boolean validateEmail(){
+        String val = mail.getEditText().getText().toString();
+        String emailPattern= "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
         if(val.isEmpty()){
-            username.setError("Username cannot be empty");
+            mail.setError("Email cannot be empty");
             return false;
-        }
+        } else if(!val.matches(emailPattern)){
+            mail.setError("Invalid email address");
+            return false;
+        }//maybe validate username unique???
         else{
-            username.setError(null);
-            username.setErrorEnabled(false);
+            mail.setError(null);
+            mail.setErrorEnabled(false);
             return true;
         }
 
@@ -84,7 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void loginUser(View view){
         //Validate login info
-        if(!validateUsername() | !validatePassword()){
+        if(!validateEmail() | !validatePassword()){
             return;
         } else {
             isUser(view);
@@ -95,70 +99,68 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void isUser(View v){
-        String userEnteredUsername = username.getEditText().getText().toString().trim();
+        String userEnteredMail = mail.getEditText().getText().toString().trim();
+        //String userEnteredUsername = username.getEditText().getText().toString().trim();
         String userEnteredPassword = password.getEditText().getText().toString().trim();
 
         mAuth = FirebaseAuth.getInstance();
-        mUser = mAuth.getCurrentUser();
-        String uid = mUser.getUid();
-        DatabaseReference reference = FirebaseDatabase.getInstance("https://questcalendar-c41e3-default-rtdb.europe-west1.firebasedatabase.app/")
-                .getReference("users").child(uid);
+        //mUser = mAuth.getCurrentUser();
+        //String uid = mUser.getUid();
+        //DatabaseReference reference = FirebaseDatabase.getInstance("https://questcalendar-c41e3-default-rtdb.europe-west1.firebasedatabase.app/")
+                //.getReference("users").child(uid);
 
 
-
-        Query checkUser = reference.orderByChild("username");
-
-        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+        mAuth.signInWithEmailAndPassword(userEnteredMail, userEnteredPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.exists()){
-                    username.setError(null);
-                    username.setErrorEnabled(false);
-
-                    String objeto = dataSnapshot.getValue().toString();
-                    String emailFromDB = dataSnapshot.child("email")
-                            .getValue(String.class);
-
-                    String passwordFromDB = dataSnapshot.child("password")
-                            .getValue(String.class);
-
-                    String usernameFromDB = dataSnapshot.child("username")
-                            .getValue(String.class);
-
-                    if(passwordFromDB.equals(userEnteredPassword)){
-                        username.setError(null);
-                        username.setErrorEnabled(false);
-
-
-
-                        mAuth.signInWithEmailAndPassword(emailFromDB, passwordFromDB).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
-                                    goToMain(v);
-                                }
-                            }
-                        });
-
-
-                    }
-                    else{
-                        password.setError("Wrong password");
-                        password.requestFocus();
-                    }
-                }else{
-                    username.setError("This user doesn't exist");
-                    username.requestFocus();
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    goToMain(v);
                 }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
 
-    }
+        //Query checkUser = reference.orderByChild("username");
+
+//        checkUser.addListenerForSingleValueEvent(new ValueEventListener() {
+//          @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if(dataSnapshot.exists()){
+        //                  username.setError(null);
+        //          username.setErrorEnabled(false);
+//
+        //                  String objeto = dataSnapshot.getValue().toString();
+        //          String emailFromDB = dataSnapshot.child("email")
+        //                  .getValue(String.class);
+//
+        //                  String passwordFromDB = dataSnapshot.child("password")
+        //                  .getValue(String.class);
+//
+        //                  String usernameFromDB = dataSnapshot.child("username")
+        ////                  .getValue(String.class);
+//
+        //                  if(passwordFromDB.equals(userEnteredPassword)){
+        //              username.setError(null);
+        //              username.setErrorEnabled(false);
+//
+
+//                    }
+        //                   else{
+        //              password.setError("Wrong password");
+        //                password.requestFocus();
+        //          }
+        //      }else{
+        //           username.setError("This user doesn't exist");
+        //          username.requestFocus();
+        //      }
+        //  }
+//
+        //          @Override
+        //  public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+        //          }
+        //    });
+//
+  }
 
 
     public void onRegister(View view){
