@@ -56,7 +56,7 @@ public class MonthlyViewFragment extends Fragment {
 
         selectedDate = new Date();
         taskNb = 0;
-        taskManager = new TaskManager(selectedDate);
+        taskManager = new TaskManager(selectedDate, 0, new ArrayList<Task>(), new ArrayList<Task>(), new ArrayList<Task>(), new ArrayList<Task>());
 
 
         //selectedDay = (TextView) view.findViewById(R.id.selected_day);

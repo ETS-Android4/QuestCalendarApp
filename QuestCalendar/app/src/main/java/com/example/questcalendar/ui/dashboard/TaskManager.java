@@ -99,13 +99,13 @@ public class TaskManager {
     FirebaseAuth mAuth;
     FirebaseUser mUser;
 
-    public TaskManager(Date day, int maxTI) {
+    public TaskManager(Date day, int maxTI, ArrayList<Task> daily, ArrayList<Task> monthly, ArrayList<Task> punctual, ArrayList<Task> tasks) {
         //set the date
         this.currentDay = day;
-        this.daily = new ArrayList<Task>();
-        this.monthly = new ArrayList<Task>();
-        this.punctual = new ArrayList<Task>();
-        this.tasksOfTheDay = new ArrayList<Task>();
+        this.daily = daily;
+        this.monthly = monthly;
+        this.punctual = punctual;
+        this.tasksOfTheDay = tasks;
 
         this.mAuth = FirebaseAuth.getInstance();
         this.mUser = mAuth.getCurrentUser();

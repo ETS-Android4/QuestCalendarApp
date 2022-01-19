@@ -29,6 +29,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -154,7 +155,7 @@ public class AddTaskFragment extends Fragment {
 
                     Task newTask = new Task(idNewTask, titleNewTask, descriptionNewTask, pickedDate, hour, frequencyNewTask);
 
-                    TaskManager taskManager = new TaskManager(pickedDate, 0);
+                    TaskManager taskManager = new TaskManager(pickedDate, 0, new ArrayList<Task>(), new ArrayList<Task>(), new ArrayList<Task>(), new ArrayList<Task>());
 
                     Toast.makeText(view.getContext().getApplicationContext(), "max id task" + taskManager.getMaxTaskId(), Toast.LENGTH_LONG).show();
                     taskManager.addTask(newTask);
