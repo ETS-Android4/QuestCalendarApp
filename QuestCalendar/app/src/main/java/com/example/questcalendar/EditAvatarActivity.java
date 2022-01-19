@@ -63,8 +63,6 @@ public class EditAvatarActivity extends AppCompatActivity {
         pic4.setOnClickListener(v -> setProfilePic(uid, 4));
 
 
-
-
     }
 
 
@@ -72,12 +70,20 @@ public class EditAvatarActivity extends AppCompatActivity {
         DatabaseReference reference = FirebaseDatabase.getInstance("https://questcalendar-c41e3-default-rtdb.europe-west1.firebasedatabase.app/")
                 .getReference("users");
 
-
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Toast.makeText(getApplicationContext(), "Character setted!", Toast.LENGTH_LONG).show();
-                reference.child(uid).child("profilePic").setValue(pic);
+                String levelDB = String.valueOf(dataSnapshot.child(uid).child("level").getValue());
+                int level = Integer.valueOf(levelDB);
+                if(level >= pic){
+                    Toast.makeText(getApplicationContext(), "Character setted!", Toast.LENGTH_LONG).show();
+                    reference.child(uid).child("profilePic").setValue(pic);
+                }else{
+                    Toast.makeText(getApplicationContext(), "You need to be at least level " + pic +" to use it!", Toast.LENGTH_LONG).show();
+                }
+
+
+
             }
 
             @Override
