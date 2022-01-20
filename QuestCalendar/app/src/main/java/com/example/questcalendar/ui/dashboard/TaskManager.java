@@ -107,91 +107,10 @@ public class TaskManager {
         this.punctual = new ArrayList<Task>();
         this.tasksOfTheDay = new ArrayList<Task>();
         this.maxTaskId = 100;
-
-
-
-
-
-
-
-
-        //get the tasks from the database
-        /*
-        this.reference.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                                    if (dataSnapshot.exists()) {
-                                        for (DataSnapshot child : dataSnapshot.getChildren()) {
-
-                                            //building the task from the database
-
-                                            //getting the frequency
-                                            int frequency = Integer.parseInt(child.child(FREQUENCY).getValue(String.class));
-
-
-                                            //getting the ID
-                                            int id = Integer.parseInt(child.child(ID).getValue(String.class));
-
-
-                                            //getting the title
-                                            String title = child.child(TITLE).getValue(String.class);
-
-
-                                            //getting the hour
-                                            int hour = Integer.parseInt(child.child(HOUR).getValue(String.class));
-
-
-                                            //getting the description
-                                            //description can be null
-                                            String description;
-                                            if (child.child(DESCRIPTION).exists()) {
-                                                description = child.chil(DESCRIPTION).getValue(String.class);
-                        } else {
-                            description = DEFAULT_DESCRIPTION;
-                        }
-
-                            //getting the date
-                        int day = Integer.parseInt(child.child(DAY).getValue(String.class));
-                        int month = Integer.parseInt(child.child(MONTH).getValue(String.class));
-                        int year = Integer.parseInt(child.child(YEAR).getValue(String.class));
-                        Date date = new Date(day, month, year, 0);
-
-                        Task currentTask = new Task(id, title, description, date, hour, frequency);
-
-                        if (currentTask.getId() > maxTaskId) {
-                            maxTaskId = currentTask.getId();
-                        }
-                        //adding the task in the right list
-                        if (frequency == Task.DAILY) {
-                            daily.add(currentTask);
-                        } else if (frequency == Task.MONTHLY) {
-                            monthly.add(currentTask);
-                        } else {
-                            punctual.add(currentTask);
-                        }
-
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-
-        });
-
-         */
-
-
-
-
-
     }
 
     //add the task t in the database
-    public void addTask(Task t) {
+    public void addTask(@NonNull Task t) {
         int frequency = t.getFrequency();
         //adding the task in the right list
         if (frequency == Task.DAILY) {
@@ -205,14 +124,9 @@ public class TaskManager {
 
     }
 
-    //delete the task t from the database
-    public void deleteTask(Task t) {
-
-    }
 
     //return the sorted list by hour of the tasks of the currentDay
     public ArrayList<Task> getTaskOfTheDay() {
-        this.tasksOfTheDay = new ArrayList<Task>();
         findTasksOfTheDay();
         TaskComparator c = new TaskComparator();
         Collections.sort(this.tasksOfTheDay, c); //add a comparator for task
@@ -221,13 +135,13 @@ public class TaskManager {
 
     public void setDay(Date newDay) {
         this.currentDay = newDay;
-        this.tasksOfTheDay = new ArrayList<Task>();
 
         //finding the task of the current day
         findTasksOfTheDay();
     }
 
     private void findTasksOfTheDay() {
+        this.tasksOfTheDay = new ArrayList<Task>();
         for (Task d : daily) {
             tasksOfTheDay.add(d);
 

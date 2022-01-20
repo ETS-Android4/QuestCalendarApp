@@ -11,12 +11,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.questcalendar.DailyQuestActivity;
 import com.example.questcalendar.R;
 import com.example.questcalendar.calendar.Date;
 import com.example.questcalendar.calendar.Task;
@@ -79,17 +81,18 @@ public class DailyViewFragment extends Fragment {
         //link to the database
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
-        reference = FirebaseDatabase.getInstance(QUEST_CALENDAR_LINK).getReference(TaskManager.USERS).child(mUser.getUid()).child(TaskManager.TASKS);
+        reference = FirebaseDatabase.getInstance(QUEST_CALENDAR_LINK).getReference(TaskManager.USERS).child(mUser.getUid());
 
 
 
         //to add a task, using the right ID
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                taskManager.empty();
                 if (dataSnapshot.exists()) {
 
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    for (DataSnapshot child : dataSnapshot.child(TaskManager.TASKS).getChildren()) {
 
                         //building the task from the database
 
@@ -131,7 +134,7 @@ public class DailyViewFragment extends Fragment {
 
                     }
 
-                    ArrayList<Task> tasks = taskManager.getTaskOfTheDay();
+
 
                     View view = inflater.inflate(R.layout.fragment_daily_view, container, false);
                     displayTasks(view);
@@ -215,7 +218,62 @@ public class DailyViewFragment extends Fragment {
 
         // afficher la liste des donnees dans la ListView
         listView.setAdapter(adapter);
+
+
+        AdapterView.OnItemClickListener messageClickedHandler = new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView parent, View v, int position, long id) {
+                //creation of the intent
+                Intent i = new Intent(getActivity(), TaskActivity.class);
+
+
+                Task t = tasks.get(position);
+                taskManager.empty();
+                reference.child("currentTask").setValue(Integer.toString(t.getId()));
+                /*
+                intent.putExtra("title", t.getTitle());
+                if (t.getDescription().isEmpty()) {
+                    intent.putExtra("description", "");
+                } else {
+                    intent.putExtra("description", t.getDescription());
+                }
+                intent.putExtra("hour", t.getHour());
+                intent.putExtra("date", selectedDate.toString());
+                intent.putExtra("done", false);
+                intent.putExtra("id", t.getId());
+
+
+ //*/
+
+                startActivity(i);
+
+            }
+        };
+
+        listView.setOnItemClickListener(messageClickedHandler);
+
+
+
     }
 
+    /*
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent)
+    {
+        super.onActivityResult(	requestCode, resultCode, intent	);
+        if ( resultCode == RESULT_OK && requestCode == 1 ) {
+
+            //recuperation du nom du contact
+            String nom = intent.getStringExtra("new_nom");
+
+            //recuperation de la position dans le tableau car je veux la renvoyer
+            int position = intent.getIntExtra("position", 0);
+            names[position] = nom;
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                    android.R.layout.simple_list_item_1, names);
+            listView.setAdapter(adapter);
+
+        }
+    }
+
+     */
 
 }

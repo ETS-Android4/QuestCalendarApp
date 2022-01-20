@@ -85,7 +85,7 @@ public class AddTaskFragment extends Fragment {
         reference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Toast.makeText(getContext().getApplicationContext(), "Task added successfully", Toast.LENGTH_LONG).show();
+
             }
 
             @Override
@@ -98,6 +98,7 @@ public class AddTaskFragment extends Fragment {
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
                 String maxID = dataSnapshot.getValue(String.class);
+                newTask.setId(maxID);
                 reference.child(TaskManager.TASKS).child(maxID).setValue(newTask);
                 int newMaxID = Integer.parseInt(maxID) +1;
                 reference.child("maxID").setValue(Integer.toString(newMaxID));
@@ -159,7 +160,7 @@ public class AddTaskFragment extends Fragment {
                         hour = hourOfDay;
                         minutes = minutes;
                         //hourButton.setText(String.format(Locale.getDefault(), "%02d:%02d", hourOfDay, minute));
-                        hourButton.setText(Integer.toString(hourOfDay));
+                        hourButton.setText(Integer.toString(hourOfDay) + "h");
                         hourPicked = true;
                     }
                 };
@@ -241,8 +242,8 @@ public class AddTaskFragment extends Fragment {
                     title.getEditText().setText("");
                     description.getEditText().setText("");
 
+                    Toast.makeText(getContext().getApplicationContext(), "Task added successfully", Toast.LENGTH_LONG).show();
 
-                    Toast.makeText(view.getContext().getApplicationContext(), "Task added successfully", Toast.LENGTH_LONG).show();
                 }
             }
         });
