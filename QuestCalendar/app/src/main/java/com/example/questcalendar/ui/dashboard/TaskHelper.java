@@ -7,13 +7,13 @@ Helper class to register tasks in the database
  */
 public class TaskHelper {
 
-    String id, title, description, hour, frequency, day, month, year;
+    String id, title, description, hour, frequency, day, month, year, done;
 
     public TaskHelper() {
         // Default constructor required for calls to DataSnapshot.getValue(User.class)
     }
 
-    public TaskHelper(String id, String title, String description, String hour, String frequency, String day, String month, String year) {
+    public TaskHelper(String id, String title, String description, String hour, String frequency, String day, String month, String year, String done) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -22,6 +22,7 @@ public class TaskHelper {
         this.day = day;
         this.month = month;
         this.year = year;
+        this.done = done;
     }
 
     public String getTitle() {
@@ -86,5 +87,13 @@ public class TaskHelper {
 
     public void setYear(String year) {
         this.year = year;
+    }
+
+    public void setDone(String done) {
+        this.done = done;
+    }
+
+    public String getDone() {
+        return done;
     }
 }

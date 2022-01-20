@@ -86,6 +86,9 @@ public class TaskManager {
     //to get the year of a task
     public final static String MAX_TASK_ID = "maximum";
 
+    //to know if a task has been done
+    public final static String DONE = "done";
+
     //when the description is empty
     public final static String DEFAULT_DESCRIPTION = "";
 

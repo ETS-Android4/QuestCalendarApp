@@ -230,7 +230,8 @@ public class AddTaskFragment extends Fragment {
 
                     newTask = new TaskHelper(ADD_TASK_ID, titleNewTask, descriptionNewTask,
                             Integer.toString(hour), Integer.toString(frequencyNewTask),
-                            Integer.toString(pickedDate.getDayOfMonth()), Integer.toString(pickedDate.getMonth()), Integer.toString(pickedDate.getYear()));
+                            Integer.toString(pickedDate.getDayOfMonth()), Integer.toString(pickedDate.getMonth()),
+                            Integer.toString(pickedDate.getYear()), "0");
 
 
 

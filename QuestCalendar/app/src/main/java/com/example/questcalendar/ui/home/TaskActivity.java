@@ -36,10 +36,11 @@ public class TaskActivity extends AppCompatActivity {
     private Button delete, goBack;
     private CheckBox doneButton;
 
-    private String id, title, description, hour, date;
-    private boolean done;
+    private String id, title, description, hour, date, done;
 
     Intent intent;
+    
+    boolean alreadyDone;
 
     ///get the current logged user
     FirebaseAuth mAuth;
@@ -98,6 +99,15 @@ public class TaskActivity extends AppCompatActivity {
                             }
                             descriptionView.setText(description);
 
+                            done = child.child(TaskManager.DONE).getValue(String.class);
+
+                            alreadyDone = done.equals(Task.DONE);
+
+
+                            doneButton.setChecked(alreadyDone);
+
+
+
                         }
 
                     }
@@ -136,21 +146,26 @@ public class TaskActivity extends AppCompatActivity {
 
 
         //checkbox
-        //doneButton = (CheckBox) findViewById(R.id.done_check);
-        //done = intent.getBooleanExtra("done", false);
-        //doneButton.setChecked(false);
+        doneButton = (CheckBox) findViewById(R.id.done_check_task);
 
-        /*
+
+
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(doneButton.isChecked()){
-                    Toast.makeText(getApplicationContext(), "You received 10 exp!", Toast.LENGTH_LONG).show();
+
+                    if ( !alreadyDone ) {
+                        Toast.makeText(getApplicationContext(), "You received 10 exp!", Toast.LENGTH_LONG).show();
+                        alreadyDone = true;
+                        reference.child(TaskManager.TASKS).child(id).child(TaskManager.DONE).setValue(Task.DONE);
+                    }
+
+
                 }
             }
         });
 
-         */
 
         //deleting the task
         delete = findViewById(R.id.delete_button_task);
