@@ -1,8 +1,11 @@
 package com.example.questcalendar.ui.home;
 
+import static com.example.questcalendar.ui.dashboard.TaskManager.QUEST_CALENDAR_LINK;
+
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -18,6 +21,14 @@ import com.example.questcalendar.R;
 import com.example.questcalendar.calendar.Date;
 import com.example.questcalendar.calendar.Task;
 import com.example.questcalendar.calendar.exceptions.MyException;
+import com.example.questcalendar.ui.dashboard.TaskManager;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,6 +45,14 @@ public class DailyViewFragment extends Fragment {
     ListView listView;
     private ArrayList<Task> tasks;
     private ArrayList<String> tasksDisplay;
+
+
+    private TaskManager taskManager;
+
+    ///get the current logged user
+    FirebaseAuth mAuth;
+    FirebaseUser mUser;
+    DatabaseReference reference;
 
 
     public DailyViewFragment() {
@@ -55,6 +74,79 @@ public class DailyViewFragment extends Fragment {
         char d = requireArguments().getChar("day_of_weak");
         selectedDate = new Date();
 
+        taskManager = new TaskManager(new Date());
+
+        //link to the database
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        reference = FirebaseDatabase.getInstance(QUEST_CALENDAR_LINK).getReference(TaskManager.USERS).child(mUser.getUid()).child(TaskManager.TASKS);
+
+
+
+        //to add a task, using the right ID
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+
+                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+
+                        //building the task from the database
+
+                        //getting the frequency
+                        int frequency = Integer.parseInt(child.child(TaskManager.FREQUENCY).getValue(String.class));
+
+
+                        //getting the ID
+                        int id = Integer.parseInt(child.child(TaskManager.ID).getValue(String.class));
+
+
+                        //getting the title
+                        String title = child.child(TaskManager.TITLE).getValue(String.class);
+
+
+                        //getting the hour
+                        int hour = Integer.parseInt(child.child(TaskManager.HOUR).getValue(String.class));
+
+
+                        //getting the description
+                        //description can be null
+                        String description;
+                        if (child.child(TaskManager.DESCRIPTION).exists()) {
+                            description = child.child(TaskManager.DESCRIPTION).getValue(String.class);
+                        } else {
+                            description = TaskManager.DEFAULT_DESCRIPTION;
+                        }
+
+                        //getting the date
+                        int day = Integer.parseInt(child.child(TaskManager.DAY).getValue(String.class));
+                        int month = Integer.parseInt(child.child(TaskManager.MONTH).getValue(String.class));
+                        int year = Integer.parseInt(child.child(TaskManager.YEAR).getValue(String.class));
+                        Date date = new Date(day, month, year, 0);
+
+                        Task currentTask = new Task(id, title, description, date, hour, frequency);
+                        taskManager.addTask(currentTask);
+
+
+
+                    }
+
+                    ArrayList<Task> tasks = taskManager.getTaskOfTheDay();
+
+                    View view = inflater.inflate(R.layout.fragment_daily_view, container, false);
+                    displayTasks(view);
+
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
 
 
         // Inflate the layout for this fragment
@@ -73,6 +165,7 @@ public class DailyViewFragment extends Fragment {
                                                  public void onClick(View arg0) {
                                                      selectedDate = selectedDate.getPreviousDay();
                                                      selectedDay.setText(selectedDate.toString());
+                                                     taskManager.setDay(selectedDate);
 
                                                      displayTasks(arg0);
 
@@ -88,6 +181,7 @@ public class DailyViewFragment extends Fragment {
             public void onClick(View arg0) {
                 selectedDate = selectedDate.getNextDay();
                 selectedDay.setText(selectedDate.toString());
+                taskManager.setDay(selectedDate);
 
                 displayTasks(arg0);
 
@@ -98,7 +192,7 @@ public class DailyViewFragment extends Fragment {
 
 
         //Display the tasks
-        displayTasks(view);
+        //displayTasks(view);
 
 
 
@@ -107,27 +201,13 @@ public class DailyViewFragment extends Fragment {
     }
 
     private void displayTasks(View view) {
-        tasks = new ArrayList<Task>();
+        tasks = taskManager.getTaskOfTheDay();
         tasksDisplay = new ArrayList<String>();
-        try {
-            Date date1 = new Date(7, 1, 2022, 4);
-            Date date2 = new Date(8, 1, 2022, 6);
-            Date date3 = new Date(5, 1, 2022, 3);
-            Task t1 = new Task(1, "dentist appointment", "my tooth is really hurting me", date1, 8, 0);
-            Task t2 = new Task(0, "Mobile Computing exam", "studying for the exam", date2, 10, 0);
-            Task t3 = new Task(2, "fork my process", "I love SEC", date3, 10, 0);
-            tasks.add(t1);
-            tasks.add(t2);
-            tasks.add(t3);
-        } catch (MyException e) {
-            Toast.makeText(getContext() , e.getMessage(), Toast.LENGTH_LONG).show();
-        }
+
 
 
         for (Task t : tasks) {
-            if (this.selectedDate.isEqual(t.getDay())) {
                 tasksDisplay.add(t.toString());
-            }
         }
 
         // creer un adaptateur a partir d'un array

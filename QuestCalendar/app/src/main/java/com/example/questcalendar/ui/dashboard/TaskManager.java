@@ -51,43 +51,43 @@ public class TaskManager {
     private final static String CURRENT_USERNAME = "aaaa";
 
     //link to the database
-    private final static String QUEST_CALENDAR_LINK = "https://questcalendar-c41e3-default-rtdb.europe-west1.firebasedatabase.app/";
+   public final static String QUEST_CALENDAR_LINK = "https://questcalendar-c41e3-default-rtdb.europe-west1.firebasedatabase.app/";
 
     //to go to the users database
-    private final static String USERS = "users";
+    public final static String USERS = "users";
 
     //to go to the tasks database
-    private final static String TASKS = "task";
+    public final static String TASKS = "task";
 
     //to get the frequency of a task
-    private final static String FREQUENCY = "frequency";
+    public final static String FREQUENCY = "frequency";
 
     //to get the id of a task
-    private final static String ID = "id";
+    public final static String ID = "id";
 
     //to get the title of a task
-    private final static String TITLE = "title";
+    public final static String TITLE = "title";
 
     //to get the hour of a task
-    private final static String HOUR = "hour";
+    public final static String HOUR = "hour";
 
     //to get the description of a task
-    private final static String DESCRIPTION = "description";
+    public final static String DESCRIPTION = "description";
 
     //to get the day of a task
-    private final static String DAY = "day";
+    public final static String DAY = "day";
 
     //to get the month of a task
-    private final static String MONTH = "month";
+    public final static String MONTH = "month";
 
     //to get the year of a task
-    private final static String YEAR = "year";
+    public final static String YEAR = "year";
 
     //to get the year of a task
-    private final static String MAX_TASK_ID = "maximum";
+    public final static String MAX_TASK_ID = "maximum";
 
     //when the description is empty
-    private final static String DEFAULT_DESCRIPTION = "";
+    public final static String DEFAULT_DESCRIPTION = "";
 
     //reference to the database
     DatabaseReference reference;
@@ -99,19 +99,14 @@ public class TaskManager {
     FirebaseAuth mAuth;
     FirebaseUser mUser;
 
-    public TaskManager(Date day, int maxTI, ArrayList<Task> daily, ArrayList<Task> monthly, ArrayList<Task> punctual, ArrayList<Task> tasks) {
+    public TaskManager(Date day) {
         //set the date
         this.currentDay = day;
-        this.daily = daily;
-        this.monthly = monthly;
-        this.punctual = punctual;
-        this.tasksOfTheDay = tasks;
-
-        this.mAuth = FirebaseAuth.getInstance();
-        this.mUser = mAuth.getCurrentUser();
-        this.userReference = FirebaseDatabase.getInstance(QUEST_CALENDAR_LINK).getReference(USERS).child(mUser.getUid());
-        this.reference = userReference.child(TASKS);
-        this.maxTaskId = maxTI;
+        this.daily = new ArrayList<Task>();
+        this.monthly = new ArrayList<Task>();
+        this.punctual = new ArrayList<Task>();
+        this.tasksOfTheDay = new ArrayList<Task>();
+        this.maxTaskId = 100;
 
 
 
@@ -121,37 +116,37 @@ public class TaskManager {
 
 
         //get the tasks from the database
-
+        /*
         this.reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot child : dataSnapshot.getChildren()) {
+                                    if (dataSnapshot.exists()) {
+                                        for (DataSnapshot child : dataSnapshot.getChildren()) {
 
-                        //building the task from the database
+                                            //building the task from the database
 
-                            //getting the frequency
-                        int frequency = Integer.parseInt(child.child(FREQUENCY).getValue(String.class));
-
-
-                            //getting the ID
-                        int id = Integer.parseInt(child.child(ID).getValue(String.class));
+                                            //getting the frequency
+                                            int frequency = Integer.parseInt(child.child(FREQUENCY).getValue(String.class));
 
 
-                            //getting the title
-                        String title = child.child(TITLE).getValue(String.class);
+                                            //getting the ID
+                                            int id = Integer.parseInt(child.child(ID).getValue(String.class));
 
 
-                            //getting the hour
-                        int hour = Integer.parseInt(child.child(HOUR).getValue(String.class));
+                                            //getting the title
+                                            String title = child.child(TITLE).getValue(String.class);
 
 
-                            //getting the description
-                            //description can be null
-                        String description;
-                        if (child.child(DESCRIPTION).exists()) {
-                            description = child.child(DESCRIPTION).getValue(String.class);
+                                            //getting the hour
+                                            int hour = Integer.parseInt(child.child(HOUR).getValue(String.class));
+
+
+                                            //getting the description
+                                            //description can be null
+                                            String description;
+                                            if (child.child(DESCRIPTION).exists()) {
+                                                description = child.chil(DESCRIPTION).getValue(String.class);
                         } else {
                             description = DEFAULT_DESCRIPTION;
                         }
@@ -187,6 +182,8 @@ public class TaskManager {
 
         });
 
+         */
+
 
 
 
@@ -195,32 +192,15 @@ public class TaskManager {
 
     //add the task t in the database
     public void addTask(Task t) {
-
-        //finding the task of the current day
-        findTasksOfTheDay();
-
-
-        //use an helper
-        String titleNewTask = t.getTitle();
-        String descriptionNewTask = t.getDescription();
-        String hourNewTask = Integer.toString(t.getHour());
-        String frequencyNewTask = Integer.toString(t.getFrequency());
-        String dayNewTask = Integer.toString(t.getDay().getDayOfMonth());
-        String monthNewTask = Integer.toString(t.getDay().getMonth());
-        String yearNewTask = Integer.toString(t.getDay().getYear());
-
-
-            //find the id
-
-        this.maxTaskId = this.maxTaskId +1;
-        String idNewTask = Integer.toString(this.maxTaskId);
-
-        TaskHelper newTask = new TaskHelper(idNewTask, titleNewTask, descriptionNewTask, hourNewTask, frequencyNewTask, dayNewTask, monthNewTask, yearNewTask);
-
-
-        //gets the username as a identifier
-        this.reference = FirebaseDatabase.getInstance(QUEST_CALENDAR_LINK).getReference(USERS).child(mUser.getUid()).child(TASKS);
-        reference.child(idNewTask).setValue(newTask);
+        int frequency = t.getFrequency();
+        //adding the task in the right list
+        if (frequency == Task.DAILY) {
+            daily.add(t);
+        } else if (frequency == Task.MONTHLY) {
+            monthly.add(t);
+        } else {
+            punctual.add(t);
+        }
 
 
     }
@@ -232,6 +212,8 @@ public class TaskManager {
 
     //return the sorted list by hour of the tasks of the currentDay
     public ArrayList<Task> getTaskOfTheDay() {
+        this.tasksOfTheDay = new ArrayList<Task>();
+        findTasksOfTheDay();
         TaskComparator c = new TaskComparator();
         Collections.sort(this.tasksOfTheDay, c); //add a comparator for task
         return this.tasksOfTheDay;
@@ -276,6 +258,13 @@ public class TaskManager {
                 System.out.println(this.maxTaskId);
             }
         }
+    }
+
+    public void empty() {
+        this.daily = new ArrayList<Task>();
+        this.monthly = new ArrayList<Task>();
+        this.punctual = new ArrayList<Task>();
+        this.tasksOfTheDay = new ArrayList<Task>();
     }
 
     public int getMaxTaskId() {

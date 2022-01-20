@@ -1,5 +1,7 @@
 package com.example.questcalendar.ui.dashboard;
 
+import static com.example.questcalendar.ui.dashboard.TaskManager.QUEST_CALENDAR_LINK;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -27,6 +29,14 @@ import com.example.questcalendar.calendar.Task;
 import com.example.questcalendar.databinding.FragmentAddTaskBinding;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.sql.Time;
 import java.util.ArrayList;
@@ -46,13 +56,71 @@ public class AddTaskFragment extends Fragment {
     private Date pickedDate;
     private boolean hourPicked;
 
+    ///get the current logged user
+    FirebaseAuth mAuth;
+    FirebaseUser mUser;
+    DatabaseReference reference;
+
+    private static final String ADD_TASK_ID = "0";
+
+    private TaskHelper newTask;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
+        //to manage the fragement
         addTaskViewModel =
                 new ViewModelProvider(this).get(AddTaskViewModel.class);
 
         binding = FragmentAddTaskBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+
+        //link to the database
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        reference = FirebaseDatabase.getInstance(QUEST_CALENDAR_LINK).getReference(TaskManager.USERS).child(mUser.getUid());
+
+        //to add a task, using the right ID
+        reference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Toast.makeText(getContext().getApplicationContext(), "Task added successfully", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                String maxID = dataSnapshot.getValue(String.class);
+                reference.child(TaskManager.TASKS).child(maxID).setValue(newTask);
+                int newMaxID = Integer.parseInt(maxID) +1;
+                reference.child("maxID").setValue(Integer.toString(newMaxID));
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+
+        });
+
+
+
+
+
 
         //select a title
         title = root.findViewById(R.id.task_title);
@@ -113,14 +181,14 @@ public class AddTaskFragment extends Fragment {
             @Override
 
             public void onClick(View view) {
-                int idNewTask = 0;
+
 
                 //to validate
                 String titleNewTask = title.getEditText().getText().toString();
 
                 String descriptionNewTask = description.getEditText().getText().toString();
 
-                //String hourNewTask = hourButton.getText().toString();
+
 
                 int frequencyNewTask;
                 if (daily.isChecked()) {
@@ -136,6 +204,12 @@ public class AddTaskFragment extends Fragment {
                 //verifying the title of the task
                 if (titleNewTask.isEmpty()) {
                     title.setError("Title cannot be empty");
+                    taskValidated = 0;
+                } else if (titleNewTask.length() < 3) {
+                    title.setError("Title cannot be less than 3 characters");
+                    taskValidated = 0;
+                } else if (titleNewTask.length() > 25) {
+                    title.setError("Title cannot be more than 25 characters");
                     taskValidated = 0;
                 }
 
@@ -153,13 +227,21 @@ public class AddTaskFragment extends Fragment {
 
                 if (taskValidated == 1) {
 
-                    Task newTask = new Task(idNewTask, titleNewTask, descriptionNewTask, pickedDate, hour, frequencyNewTask);
+                    newTask = new TaskHelper(ADD_TASK_ID, titleNewTask, descriptionNewTask,
+                            Integer.toString(hour), Integer.toString(frequencyNewTask),
+                            Integer.toString(pickedDate.getDayOfMonth()), Integer.toString(pickedDate.getMonth()), Integer.toString(pickedDate.getYear()));
 
-                    TaskManager taskManager = new TaskManager(pickedDate, 0, new ArrayList<Task>(), new ArrayList<Task>(), new ArrayList<Task>(), new ArrayList<Task>());
 
-                    Toast.makeText(view.getContext().getApplicationContext(), "max id task" + taskManager.getMaxTaskId(), Toast.LENGTH_LONG).show();
-                    taskManager.addTask(newTask);
-                    Toast.makeText(view.getContext().getApplicationContext(), "max id task" + taskManager.getMaxTaskId(), Toast.LENGTH_LONG).show();
+
+
+
+
+                    reference.child("maxID").removeValue();
+
+                    title.getEditText().setText("");
+                    description.getEditText().setText("");
+
+
                     Toast.makeText(view.getContext().getApplicationContext(), "Task added successfully", Toast.LENGTH_LONG).show();
                 }
             }
@@ -218,6 +300,7 @@ public class AddTaskFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
 
 
 
