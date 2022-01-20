@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditAvatarActivity"
+    android:orientation="vertical"
+    android:padding="30dp"
+    android:background="@color/qc_background">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SELECT YOUR CHARACTER"
+        android:fontFamily="@font/bungee"
+        android:textSize="30dp"
+        android:textColor="#000"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profilePic"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@mipmap/qc_icon_template_round"
+                app:civ_border_color="#FFff"
+                app:civ_border_width="2dp" />
+
+            <Button
+                android:id="@+id/first_button"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:backgroundTint="#FFF"
+                android:fontFamily="@font/roboto"
+                android:text="SAVAGE LEMON"
+                android:textColor="#000" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profilePic2"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@mipmap/qc_icon_2_round"
+                app:civ_border_color="#FFff"
+                app:civ_border_width="2dp"
+                android:layout_marginLeft="20dp"/>
+
+
+            <Button
+                android:id="@+id/second_button"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:backgroundTint="#FFF"
+                android:fontFamily="@font/roboto"
+                android:text="DARK PIRATE"
+                android:textColor="#000"
+                android:layout_marginLeft="20dp"/>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profilePic3"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@mipmap/qc_icon_3_round"
+                app:civ_border_color="#FFff"
+                app:civ_border_width="2dp" />
+
+            <Button
+                android:id="@+id/third_button"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:backgroundTint="#FFF"
+                android:fontFamily="@font/roboto"
+                android:text="ORANGE KNIGHT"
+                android:textColor="#000" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profilePic4"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@mipmap/qc_icon_4_round"
+                app:civ_border_color="#FFff"
+                app:civ_border_width="2dp"
+                android:layout_marginLeft="20dp"/>
+
+
+            <Button
+                android:id="@+id/forth_button"
+                android:layout_width="150dp"
+                android:layout_height="60dp"
+                android:backgroundTint="#FFF"
+                android:fontFamily="@font/roboto"
+                android:text="NORMAL HUMAN"
+                android:textColor="#000"
+                android:layout_marginLeft="20dp"/>
+        </LinearLayout>
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom">
+        <Button
+            android:id="@+id/back_button_char"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:backgroundTint="#000"
+            android:fontFamily="@font/roboto"
+            android:text="GO BACK"
+            android:textColor="#FFF"/>
+    </LinearLayout>
+
+</LinearLayout>
