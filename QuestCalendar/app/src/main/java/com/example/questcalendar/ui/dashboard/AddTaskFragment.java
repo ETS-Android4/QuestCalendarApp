@@ -270,7 +270,7 @@ public class AddTaskFragment extends Fragment {
              month = month +1;
              String date = month + "/" + dayOfMonth + "/" + year;
              dateButton.setText(date);
-             pickedDate = new Date(dayOfMonth, month, year, 0);
+             pickedDate = new Date(dayOfMonth, month, year);
         }
     };
 

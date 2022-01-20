@@ -125,7 +125,7 @@ public class DailyViewFragment extends Fragment {
                         int day = Integer.parseInt(child.child(TaskManager.DAY).getValue(String.class));
                         int month = Integer.parseInt(child.child(TaskManager.MONTH).getValue(String.class));
                         int year = Integer.parseInt(child.child(TaskManager.YEAR).getValue(String.class));
-                        Date date = new Date(day, month, year, 0);
+                        Date date = new Date(day, month, year);
 
                         Task currentTask = new Task(id, title, description, date, hour, frequency);
                         taskManager.addTask(currentTask);
