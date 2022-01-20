@@ -110,7 +110,7 @@ public class MonthlyViewFragment extends Fragment {
                         int day = Integer.parseInt(child.child(TaskManager.DAY).getValue(String.class));
                         int month = Integer.parseInt(child.child(TaskManager.MONTH).getValue(String.class));
                         int year = Integer.parseInt(child.child(TaskManager.YEAR).getValue(String.class));
-                        Date date = new Date(day, month, year, 0);
+                        Date date = new Date(day, month, year);
 
                         Task currentTask = new Task(id, title, description, date, hour, frequency);
                         taskManager.addTask(currentTask);
@@ -152,7 +152,7 @@ public class MonthlyViewFragment extends Fragment {
                 calendar.set(year, month, dayOfMonth);
                 int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
                 //selectedDay.setText(date);
-                selectedDate = new Date(dayOfMonth, month +1, year, (dayOfWeek -1));
+                selectedDate = new Date(dayOfMonth, month +1, year);
                 //debug.setText(date + " " + selectedDate.toString());
                 taskManager.setDay(selectedDate);
                 ArrayList<Task> tasks = taskManager.getTaskOfTheDay();

@@ -79,7 +79,7 @@ public class TaskActivity extends AppCompatActivity {
                             int day = Integer.parseInt(child.child(TaskManager.DAY).getValue(String.class));
                             int month = Integer.parseInt(child.child(TaskManager.MONTH).getValue(String.class));
                             int year = Integer.parseInt(child.child(TaskManager.YEAR).getValue(String.class));
-                            Date today = new Date(day, month, year, 0);
+                            Date today = new Date(day, month, year);
 
                             int frequency = Integer.parseInt(child.child(TaskManager.FREQUENCY).getValue(String.class));
                             if (frequency == Task.DAILY) {
