@@ -88,10 +88,6 @@ public class EditProfileActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
         //Cuando pulsemos el boton de guardar, que se actualicen los datos
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,6 +106,7 @@ public class EditProfileActivity extends AppCompatActivity {
         reference = rootNode.getReference("users");
         mAuth = FirebaseAuth.getInstance();
         mUser = mAuth.getCurrentUser();
+        String uid = mUser.getUid();
 
         if(!validateUsername() | !validateEmail() | !validatePassword() | !validateConfirmPassword()){
             return;
@@ -120,10 +117,36 @@ public class EditProfileActivity extends AppCompatActivity {
         String password = updPassword.getEditText().getText().toString();
         String confirmPassword = updConfirmPassword.getEditText().getText().toString();
 
-        UserHelperClass helperClass = new UserHelperClass(username, email, password);
+
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                DataSnapshot user = dataSnapshot.child(uid);
+                //getting and inting level
+                String strlevel = user.child("level").getValue().toString();
+                int level = Integer.parseInt(strlevel);
+                //getting and inting experience
+                String strexperience = user.child("experience").getValue().toString();
+                int experience = Integer.parseInt(strexperience);
+                //getting and inting profile pic
+                String strpp = user.child("profilePic").getValue().toString();
+                int pp = Integer.parseInt(strpp);
+
+                UserHelperClass helperClass = new UserHelperClass(username, email, password, level, experience, pp);
+                reference.child(mUser.getUid()).setValue(helperClass);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+
+
 
         mUser.updateEmail(email);
-        reference.child(mUser.getUid()).setValue(helperClass);
+
         Toast.makeText(getApplicationContext(), "Updated successfully", Toast.LENGTH_LONG).show();
         onMain(v);
 

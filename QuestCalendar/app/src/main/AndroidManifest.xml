@@ -13,6 +13,9 @@
             android:name=".ui.home.TaskActivity"
             android:exported="false" />
         <activity
+            android:name=".EditAvatarActivity"
+            android:exported="false" />
+        <activity
             android:name=".DailyQuestActivity"
             android:exported="false" />
         <activity
