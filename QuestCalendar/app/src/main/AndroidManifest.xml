@@ -10,7 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.QuestCalendar">
         <activity
+            android:name=".EditAvatarActivity"
+            android:exported="false" />
+        <activity
             android:name=".DailyQuestActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditProfileActivity"
             android:exported="false" />
         <activity
             android:name=".NotificationsActivity"
@@ -33,7 +39,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="true"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
 
         <meta-data
             android:name="preloaded_fonts"

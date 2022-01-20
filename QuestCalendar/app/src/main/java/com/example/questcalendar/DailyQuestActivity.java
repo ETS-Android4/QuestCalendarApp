@@ -1,5 +1,7 @@
 package com.example.questcalendar;
 
+import static java.lang.Math.pow;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,6 +15,8 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +29,10 @@ import java.util.Random;
 public class DailyQuestActivity extends AppCompatActivity {
 
     CheckBox done;
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
+    FirebaseAuth mAuth;
+    FirebaseUser mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +45,18 @@ public class DailyQuestActivity extends AppCompatActivity {
         goBack.setOnClickListener(v -> onBack(v));
 
 
+        FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+
+                }else{
+                    onWelcome();
+                }
+            }
+        });
+
 
         //checkbox
         done =(CheckBox) findViewById(R.id.done_check);
@@ -45,7 +65,58 @@ public class DailyQuestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(done.isChecked()){
+                    //update level and exp
+                    rootNode = FirebaseDatabase.getInstance("https://questcalendar-c41e3-default-rtdb.europe-west1.firebasedatabase.app/");
+                    reference = rootNode.getReference("users");
+                    mAuth = FirebaseAuth.getInstance();
+                    mUser = mAuth.getCurrentUser();
+                    String uid = mUser.getUid();
+
+
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            DataSnapshot user = dataSnapshot.child(uid);
+                            //getting and inting level
+                            String strlevel = user.child("level").getValue().toString();
+                            int level = Integer.parseInt(strlevel);
+                            //getting and inting experience
+                            String strexperience = user.child("experience").getValue().toString();
+                            int experience = Integer.parseInt(strexperience);
+                            //getting and inting profile pic
+                            String strpp = user.child("profilePic").getValue().toString();
+                            int pp = Integer.parseInt(strpp);
+
+                            //getting username etc
+                            String username = user.child("username").getValue().toString();
+                            String email = user.child("email").getValue().toString();
+                            String password = user.child("password").getValue().toString();
+
+
+                            //seting exp and level
+                            experience = experience +10;
+                            int systemLevel = 50 + (int) pow(level, 2);
+                            if(experience >= systemLevel){
+                                level = level +1;
+                                experience = experience - systemLevel;
+                            }
+
+                            UserHelperClass helperClass = new UserHelperClass(username, email, password, level, experience, pp);
+                            reference.child(mUser.getUid()).setValue(helperClass);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+
+                    });
+
+
+
+
                     Toast.makeText(getApplicationContext(), "You received 10 exp!", Toast.LENGTH_LONG).show();
+                    new  UserHelperClass().gainExperience(10);
                     finish();
 
                 }
@@ -99,6 +170,13 @@ public class DailyQuestActivity extends AppCompatActivity {
         Random random = new Random();
         return random.nextInt(max - min) + min;
     }
+
+
+    private void onWelcome(){
+        Intent i = new Intent(this, WelcomeActivity.class);
+        startActivity(i);
+    }
+
 
 
 }
