@@ -135,10 +135,22 @@
             android:text="daily"/>
         <com.google.android.material.button.MaterialButton
             style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/toggle_button_weekly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="weekly"/>
+        <com.google.android.material.button.MaterialButton
+            style="?attr/materialButtonOutlinedStyle"
             android:id="@+id/toggle_button_monthly"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="monthly"/>
+        <com.google.android.material.button.MaterialButton
+            style="?attr/materialButtonOutlinedStyle"
+            android:id="@+id/toggle_button_yearly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="yearly"/>
 
 
     </com.google.android.material.button.MaterialButtonToggleGroup>

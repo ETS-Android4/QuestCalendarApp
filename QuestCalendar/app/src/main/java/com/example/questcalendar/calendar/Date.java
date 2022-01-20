@@ -7,14 +7,22 @@ import java.util.Calendar;
 
 public class Date {
     
-    private final static String MONTHS[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-    private final static int MAX_DAY_OF_MONTH[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    public final static String MONTHS[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    public final static int MAX_DAY_OF_MONTH[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 
 
-    /* */
+
+
+    //from 1 to MAX_DAY_OF_MONTH
     private int dayOfMonth;
+
+    //from 1 to 12, but Calendar go from 0 to 11
     private int month;
+
+    //regular
     private int year;
+
+    //from 1 to 7
     private int dayOfWeek;
 
     private Calendar c;
@@ -75,7 +83,11 @@ public class Date {
         return month;
     }
 
-    private String getNameDayOfWeek() {
+    public int getDayOfWeek() {
+        return dayOfWeek;
+    }
+
+    public String getNameDayOfWeek() {
         c.set(year, month -1, dayOfMonth);
         SimpleDateFormat dayOfWeekSDF = new SimpleDateFormat("EEE");
         return dayOfWeekSDF.format(c.getTime());

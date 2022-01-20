@@ -134,7 +134,10 @@ public class MonthlyViewFragment extends Fragment {
 
         });
 
+
+
         taskNbView = (TextView) view.findViewById(R.id.task_nb);
+        taskNbView.setText("Hello");
         //debug = (TextView) view.findViewById(R.id.debug);
 
         selectedDate = new Date();

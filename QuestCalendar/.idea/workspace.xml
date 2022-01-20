@@ -16,9 +16,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/questcalendar/calendar/Date.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/questcalendar/calendar/Date.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/questcalendar/ui/dashboard/AddTaskFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/questcalendar/ui/dashboard/AddTaskFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/questcalendar/ui/home/DailyViewFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/questcalendar/ui/home/DailyViewFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/questcalendar/ui/dashboard/TaskManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/questcalendar/ui/dashboard/TaskManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/questcalendar/ui/home/MonthlyViewFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/questcalendar/ui/home/MonthlyViewFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/questcalendar/ui/home/TaskActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/questcalendar/ui/home/TaskActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_task.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_task.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -179,7 +180,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/example/questcalendar/ui/dashboard/TaskManager.java</url>
-          <line>118</line>
+          <line>123</line>
           <option name="timeStamp" value="70" />
         </line-breakpoint>
       </breakpoints>

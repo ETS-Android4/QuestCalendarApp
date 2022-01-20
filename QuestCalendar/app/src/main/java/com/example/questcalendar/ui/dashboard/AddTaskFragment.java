@@ -51,7 +51,7 @@ public class AddTaskFragment extends Fragment {
     private AddTaskViewModel addTaskViewModel;
     private FragmentAddTaskBinding binding;
     private Button addTask;
-    private MaterialButton daily, monthly;
+    private MaterialButton daily, weekly, monthly, yearly;
     private TextInputLayout title, description;
     private Date pickedDate;
     private boolean hourPicked;
@@ -174,7 +174,9 @@ public class AddTaskFragment extends Fragment {
 
         //frequency
         daily = root.findViewById(R.id.toggle_button_daily);
+        weekly = root.findViewById(R.id.toggle_button_weekly);
         monthly = root.findViewById(R.id.toggle_button_monthly);
+        yearly = root.findViewById(R.id.toggle_button_yearly);
 
         //add task
         addTask = root.findViewById(R.id.add_task_button);
@@ -194,8 +196,12 @@ public class AddTaskFragment extends Fragment {
                 int frequencyNewTask;
                 if (daily.isChecked()) {
                     frequencyNewTask = Task.DAILY;
+                } else if (weekly.isChecked()) {
+                    frequencyNewTask = Task.WEEKLY;
                 } else if (monthly.isChecked()) {
                     frequencyNewTask = Task.MONTHLY;
+                } else if (yearly.isChecked()) {
+                    frequencyNewTask = Task.YEARLY;
                 } else {
                     frequencyNewTask = Task.PUNCTUAL;
                 }

@@ -31,14 +31,17 @@ public class TaskManager {
     //the day for which we want a list of the tasks
     private Date currentDay;
 
-    //the max ID of all of the tasks
-    private int maxTaskId;
-
     //the list of the daily tasks
     private List<Task> daily;
 
     //the list of the monthly tasks
+    private List<Task> weekly;
+
+    //the list of the daily tasks
     private List<Task> monthly;
+
+    //the list of the monthly tasks
+    private List<Task> yearly;
 
     //the list of the punctual tasks
     private List<Task> punctual;
@@ -51,7 +54,7 @@ public class TaskManager {
     private final static String CURRENT_USERNAME = "aaaa";
 
     //link to the database
-   public final static String QUEST_CALENDAR_LINK = "https://questcalendar-c41e3-default-rtdb.europe-west1.firebasedatabase.app/";
+    public final static String QUEST_CALENDAR_LINK = "https://questcalendar-c41e3-default-rtdb.europe-west1.firebasedatabase.app/";
 
     //to go to the users database
     public final static String USERS = "users";
@@ -106,10 +109,12 @@ public class TaskManager {
         //set the date
         this.currentDay = day;
         this.daily = new ArrayList<Task>();
+        this.weekly = new ArrayList<Task>();
         this.monthly = new ArrayList<Task>();
+        this.yearly = new ArrayList<Task>();
         this.punctual = new ArrayList<Task>();
         this.tasksOfTheDay = new ArrayList<Task>();
-        this.maxTaskId = 100;
+
     }
 
     //add the task t in the database
@@ -118,8 +123,12 @@ public class TaskManager {
         //adding the task in the right list
         if (frequency == Task.DAILY) {
             daily.add(t);
+        } else if (frequency == Task.WEEKLY) {
+            weekly.add(t);
         } else if (frequency == Task.MONTHLY) {
             monthly.add(t);
+        } else if (frequency == Task.YEARLY) {
+            yearly.add(t);
         } else {
             punctual.add(t);
         }
@@ -148,9 +157,12 @@ public class TaskManager {
         for (Task d : daily) {
             tasksOfTheDay.add(d);
 
-            if (d.getId() > this.maxTaskId) {
-                this.maxTaskId = d.getId();
-                System.out.println(this.maxTaskId);
+
+        }
+
+        for (Task w : weekly) {
+            if (w.getDay().getDayOfWeek() == currentDay.getDayOfWeek()) {
+                tasksOfTheDay.add(w);
             }
         }
 
@@ -159,32 +171,27 @@ public class TaskManager {
                 tasksOfTheDay.add(m);
             }
 
-            if (m.getId() > this.maxTaskId) {
-                this.maxTaskId = m.getId();
-                System.out.println(this.maxTaskId);
-            }
         }
 
+        for (Task y : yearly) {
+            if (y.getDay().getDayOfMonth() == currentDay.getDayOfMonth() && y.getDay().getMonth() == currentDay.getMonth()) {
+                tasksOfTheDay.add(y);
+            }
+        }
         for (Task p : punctual) {
             if (p.getDay().isEqual(currentDay)) {
                 tasksOfTheDay.add(p);
             }
 
-            if (p.getId() > this.maxTaskId) {
-                this.maxTaskId = p.getId();
-                System.out.println(this.maxTaskId);
-            }
         }
     }
 
     public void empty() {
         this.daily = new ArrayList<Task>();
+        this.weekly = new ArrayList<Task>();
         this.monthly = new ArrayList<Task>();
+        this.yearly = new ArrayList<Task>();
         this.punctual = new ArrayList<Task>();
         this.tasksOfTheDay = new ArrayList<Task>();
-    }
-
-    public int getMaxTaskId() {
-        return maxTaskId;
     }
 }

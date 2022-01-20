@@ -84,8 +84,12 @@ public class TaskActivity extends AppCompatActivity {
                             int frequency = Integer.parseInt(child.child(TaskManager.FREQUENCY).getValue(String.class));
                             if (frequency == Task.DAILY) {
                                 date = "DAILY";
+                            } else if (frequency == Task.WEEKLY) {
+                                date = "EVERY " + today.getNameDayOfWeek();
                             } else if (frequency == Task.MONTHLY) {
                                 date = "MONTHLY : " + child.child(TaskManager.DAY).getValue(String.class);
+                            } else if (frequency == Task.YEARLY) {
+                                date = child.child(TaskManager.DAY).getValue(String.class) + Date.MONTHS[Integer.parseInt(child.child(TaskManager.DAY).getValue(String.class)) -1];
                             } else {
                                 date = today.toString();
                             }
