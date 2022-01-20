@@ -131,9 +131,11 @@ public class EditProfileActivity extends AppCompatActivity {
                 //getting and inting profile pic
                 String strpp = user.child("profilePic").getValue().toString();
                 int pp = Integer.parseInt(strpp);
+                
+                reference.child(mUser.getUid()).child("username").setValue(username);
+                reference.child(mUser.getUid()).child("email").setValue(email);
+                reference.child(mUser.getUid()).child("password").setValue(password);
 
-                UserHelperClass helperClass = new UserHelperClass(username, email, password, level, experience, pp);
-                reference.child(mUser.getUid()).setValue(helperClass);
             }
 
             @Override

@@ -101,8 +101,9 @@ public class DailyQuestActivity extends AppCompatActivity {
                                 experience = experience - systemLevel;
                             }
 
-                            UserHelperClass helperClass = new UserHelperClass(username, email, password, level, experience, pp);
-                            reference.child(mUser.getUid()).setValue(helperClass);
+
+                            reference.child(mUser.getUid()).child("level").setValue(level);
+                            reference.child(mUser.getUid()).child("experience").setValue(experience);
                         }
 
                         @Override
