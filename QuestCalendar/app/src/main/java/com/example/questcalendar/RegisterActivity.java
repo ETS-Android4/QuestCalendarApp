@@ -171,6 +171,11 @@ public class RegisterActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
                     reference.child(mUser.getUid()).setValue(helperClass);
+
+                    // to add a task
+                    reference.child(mUser.getUid()).child("maxID").setValue("0");
+
+
                     Toast.makeText(getApplicationContext(), "Registered successfully", Toast.LENGTH_LONG).show();
                     onLogin(v);
                 }else{
