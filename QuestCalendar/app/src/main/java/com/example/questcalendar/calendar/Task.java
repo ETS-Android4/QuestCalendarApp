@@ -1,12 +1,5 @@
 package com.example.questcalendar.calendar;
 
-import static android.graphics.Color.*;
-
-import android.graphics.Color;
-import android.graphics.ColorSpace;
-
-import androidx.compose.ui.graphics.colorspace.ColorSpaces;
-
 import com.example.questcalendar.calendar.exceptions.MyException;
 
 /**
@@ -20,6 +13,8 @@ public class Task {
     public final static int WEEKLY = 2;
     public final static int MONTHLY = 3;
     public final static int YEARLY = 4;
+    public final static String DONE = "1";
+    public final static String NOT_DONE = "0";
 
     public final static int MAX_FREQUENCY = 4;
     public final static int MIN_FREQUENCY = 0;
@@ -30,6 +25,7 @@ public class Task {
     private Date day;
     private int hour; //only round hour
     private int frequency;
+    private String done;
     //private Color color;
 
     public Task(int nId, String nTitle, String nDescription, Date nDay, int nHour, int nFrequency) throws MyException {
@@ -44,6 +40,7 @@ public class Task {
         day = nDay;
         hour = nHour;
         frequency = nFrequency;
+        done = NOT_DONE;
 
         //color = new Color(WHITE);
 
@@ -96,6 +93,10 @@ public class Task {
 
     public Date getDay() {
         return day;
+    }
+
+    public String getDone() {
+        return done;
     }
 
     /*
